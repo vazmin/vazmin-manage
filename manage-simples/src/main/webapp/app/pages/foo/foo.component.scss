@@ -1,0 +1,105 @@
+@import '../../@theme/styles/themes';
+@include nb-install-component() {
+  .progress-wrap {
+    position: relative;
+    height: 1rem;
+
+    .progress-foreground {
+      background-color: nb-theme(color-success);
+      height: 2px;
+      position: absolute;
+      left: 0;
+      margin-top: calc(0.75rem - 1px);
+      width: 100px;
+
+      @include nb-for-theme(cosmic) {
+        background-color: nb-theme(link-color);
+      }
+
+      @include nb-for-theme(corporate) {
+        background-color: nb-theme(color-primary);
+      }
+    }
+
+    .progress {
+      -webkit-appearance: none;
+      width: 100%;
+      background: transparent;
+      height: 1.5rem;
+      outline: none;
+      position: absolute;
+
+      @include install-thumb() {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        background: nb-theme(color-success);
+        cursor: pointer;
+        margin-top: calc(-0.5rem + 1px);
+        border: none;
+      }
+
+      @include install-track() {
+        width: 100%;
+        height: 2px;
+        cursor: pointer;
+        background: nb-theme(separator);
+      }
+
+      @include nb-for-theme(cosmic) {
+        @include install-thumb() {
+          background: nb-theme(link-color);
+        }
+      }
+
+      @include nb-for-theme(corporate) {
+        @include install-thumb() {
+          background: nb-theme(color-primary);
+        }
+      }
+    }
+  }
+
+  .range-slider {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    position: relative;
+    max-width: 400px;
+    min-width: 200px;
+    i {
+      font-size: 1.5rem;
+      color: nb-theme(color-fg);
+    }
+
+    .progress-wrap {
+      height: 1.5rem;
+      margin: 0;
+      width: 90%;
+
+      .progress-foreground {
+        left: auto;
+        margin-top: calc(1rem + 1px);
+        z-index: 0;
+        width: 0;
+      }
+
+      .progress {
+        height: 2.25rem;
+
+        @include install-thumb() {
+          //width: 1.5rem;
+          //height: 1.5rem;
+          background-color: nb-theme(color-white);
+          box-shadow: 0 0.125rem 0.5rem 0 rgba(nb-theme(color-fg), 0.4);
+          border: solid 1px rgba(nb-theme(color-fg), 0.4);
+
+          margin-top: calc(-0.875rem + 3px);
+          position: relative;
+          z-index: 10;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "groupInfo": {
+    "groupMemo": "Group Memo",
+    "groupName": "Group Name",
+    "createTime": "Create Time",
+    "departmentId": "Department Id",
+    "id": "Id",
+    "status": "Status"
+  }
+}

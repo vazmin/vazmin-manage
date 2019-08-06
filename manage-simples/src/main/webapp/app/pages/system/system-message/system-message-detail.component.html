@@ -1,0 +1,41 @@
+<nb-card>
+    <nb-card-header>
+    系统错误日志 详细信息
+    </nb-card-header>
+
+    <nb-card-body class="p-0">
+        <ul *ngIf="systemMessage" class="detail-list">
+          <li>
+            <div class="field" ngxTranslate="systemMessage.id">记录id</div>
+            <div class="value">{{systemMessage.id}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="systemMessage.title">消息标题</div>
+            <div class="value">{{systemMessage.title}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="systemMessage.message">消息内容</div>
+            <div class="value"><code>{{systemMessage.message}}</code></div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="systemMessage.messageLevel">消息级别</div>
+            <div class="value">{{systemMessage.messageLevel}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="systemMessage.messageModule">消息所在模块（类）</div>
+            <div class="value">{{systemMessage.messageModule}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="systemMessage.messageLine">消息所在位置</div>
+            <div class="value">{{systemMessage.messageLine}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="systemMessage.messageTime">消息时间</div>
+            <div class="value">{{systemMessage.messageTime * 1000 | date: dateFormat}}</div>
+          </li>
+        </ul>
+    </nb-card-body>
+    <nb-card-footer>
+        <button class="btn btn-primary" routerLink="/pages/system/system-message">返回</button>
+    </nb-card-footer>
+</nb-card>

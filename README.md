@@ -1,1 +1,1 @@
-# chwing-manage
+# vazmin-manage

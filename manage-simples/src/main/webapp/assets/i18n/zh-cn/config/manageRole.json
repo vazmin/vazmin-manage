@@ -1,0 +1,9 @@
+{
+  "manageRole": {
+    "manager": "是否是管理层",
+    "name": "角色名",
+    "memo": "备注",
+    "id": "角色id",
+    "status": "状态"
+  }
+}

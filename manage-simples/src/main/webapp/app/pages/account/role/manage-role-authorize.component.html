@@ -1,0 +1,51 @@
+<!--<nb-card [nbSpinner]="treeLoading" nbSpinnerStatus="danger" nbSpinnerMessage="正在初始化权限树...">-->
+<nb-card>
+  <nb-card-header class="title-tools">
+    平台角色 权限配置 {{manageUser != null ? manageUser.name : ''}}
+    <div class="tools-btn-group">
+      <button class="btn btn-danger with-margins" (click)="savePrivilege()"
+              *hasAnyPermission="'/pages/account/role/savePrivilege'"
+              ngxTranslate="entity.action.save">保存</button>
+      <button class="btn btn-primary with-margins" routerLink="/pages/account/role">返回</button>
+    </div>
+  </nb-card-header>
+</nb-card>
+<ngx-alert></ngx-alert>
+<ngx-alert-error></ngx-alert-error>
+<div class="row" *ngIf="userPrivilege">
+  <div class="col-3 col-md-3 col-sm-4">
+    <nb-card>
+      <nb-card-body class="p-0" >
+        <nb-list>
+          <nb-list-item *ngFor="let menu of userPrivilege[0].children; let i = index"
+                        (click)="active(menu)" [class.bg-active]="menu.active">
+            <div class="custom-control custom-checkbox " [class.checked-gt0]="menu.isPartiallySelected">
+              <input type="checkbox" class="custom-control-input" id="tree-cb-{{i}}"
+                     [value]="menu.isSelected"
+                     [checked]="menu.isSelected"
+                     [indeterminate]="menu.isPartiallySelected"
+                     (click)="returnFalse()"
+              />
+              <label class="custom-control-label" for="tree-cb-{{i}}">
+                <span>{{menu.name}}</span>
+              </label>
+            </div>
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-9 col-md-9 col-sm-8" *ngIf="activeNode">
+    <nb-card [nbSpinner]="treeLoading" nbSpinnerStatus="danger" style="max-height: 70vh">
+      <nb-card-body>
+        <tree-root *ngIf="activeNode" #tree [nodes]="activeNode" [options]="options" (initialized)="onTreeInit(tree)"
+                   (select)="selectChangeTreeNode($event)" (deselect)="selectChangeTreeNode($event)" (updateData)="updateData($event)" class="privilege-tree">
+          <ng-template #treeNodeWrapperTemplate let-node let-index="index">
+            <ngx-tree-node-wrapper [tid]="0" [node]="node"></ngx-tree-node-wrapper>
+          </ng-template>
+        </tree-root>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+

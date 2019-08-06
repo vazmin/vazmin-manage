@@ -1,0 +1,53 @@
+<nb-card>
+    <nb-card-header>
+    模块信息 详细信息
+    </nb-card-header>
+
+    <nb-card-body class="p-0">
+        <ul *ngIf="moduleInfo" class="detail-list">
+          <li>
+            <div class="field" ngxTranslate="moduleInfo.id">条目id</div>
+            <div class="value">{{moduleInfo.id}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="moduleInfo.parentId">上级id</div>
+            <div class="value">{{moduleInfo.parentId}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="moduleInfo.code">条目编码</div>
+            <div class="value">{{moduleInfo.code}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="moduleInfo.value">条目名称</div>
+            <div class="value">{{moduleInfo.value}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="moduleInfo.orderNumber">同级显示顺序</div>
+            <div class="value">{{moduleInfo.orderNumber}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="moduleInfo.pkgName">包名和类名</div>
+            <div class="value">{{moduleInfo.pkgName}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="moduleInfo.path">访问路径</div>
+            <div class="value">{{moduleInfo.path}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="moduleInfo.enable">是否启用</div>
+            <div class="value">{{moduleInfo.enable}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="moduleInfo.inletUri">模块入口地址</div>
+            <div class="value">{{moduleInfo.inletUri}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="moduleInfo.discard">是否舍弃</div>
+            <div class="value">{{moduleInfo.discard}}</div>
+          </li>
+        </ul>
+    </nb-card-body>
+    <nb-card-footer>
+        <button class="btn btn-primary" routerLink="/pages/system/module-info">返回</button>
+    </nb-card-footer>
+</nb-card>

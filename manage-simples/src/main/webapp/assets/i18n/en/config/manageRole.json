@@ -1,0 +1,9 @@
+{
+  "manageRole": {
+    "manager": "Manager",
+    "name": "Name",
+    "memo": "Memo",
+    "id": "Id",
+    "status": "Status"
+  }
+}

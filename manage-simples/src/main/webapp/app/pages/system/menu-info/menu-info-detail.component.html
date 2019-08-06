@@ -1,0 +1,49 @@
+<nb-card>
+    <nb-card-header>
+    菜单信息 详细信息
+    </nb-card-header>
+
+    <nb-card-body class="p-0">
+        <ul *ngIf="menuInfo" class="detail-list">
+          <li>
+            <div class="field" ngxTranslate="menuInfo.id">条目id</div>
+            <div class="value">{{menuInfo.id}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="menuInfo.parentId">上级id</div>
+            <div class="value">{{menuInfo.parentId}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="menuInfo.code">条目编码</div>
+            <div class="value">{{menuInfo.code}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="menuInfo.value">条目名称</div>
+            <div class="value">{{menuInfo.value}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="menuInfo.orderNumber">同级显示顺序</div>
+            <div class="value">{{menuInfo.orderNumber}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="menuInfo.pkgName">包名</div>
+            <div class="value">{{menuInfo.pkgName}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="menuInfo.path">访问路径</div>
+            <div class="value">{{menuInfo.path}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="menuInfo.enable">是否启用</div>
+            <div class="value">{{menuInfo.enable}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="menuInfo.discard">是否舍弃</div>
+            <div class="value">{{menuInfo.discard}}</div>
+          </li>
+        </ul>
+    </nb-card-body>
+    <nb-card-footer>
+        <button class="btn btn-primary" routerLink="/pages/system/menu-info">返回</button>
+    </nb-card-footer>
+</nb-card>

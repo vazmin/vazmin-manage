@@ -1,0 +1,310 @@
+{
+	"commandInfo": {
+		"path": "访问路径",
+		"discard": "是否舍弃",
+		"code": "条目编码",
+		"orderNumber": "同级显示顺序",
+		"enable": "是否启用",
+		"pkgName": "包名和方法名",
+		"id": "条目id",
+		"value": "条目名称",
+		"inlet": "是否是模块入口",
+		"parentId": "上级id"
+	},
+	"commandLog": {
+		"commandName": "命令名称",
+		"actionTime": "操作时间",
+		"name": "姓名",
+		"moduleName": "模块名称",
+		"userIp": "用户IP",
+		"id": "记录id",
+		"resultMessage": "操作提示信息",
+		"userId": "用户id",
+		"commandId": "命令id",
+		"parameters": "请求参数",
+		"requestPath": "请求路径",
+		"resultSuccesss": "操作是否成功"
+	},
+	"error": {
+		"title": "错误页面!",
+		"http": {
+			"400": "请求失败.",
+			"403": "您没有权限访问此页面.",
+			"405": "不允许此方法访问页面.",
+			"500": "内部服务器错误."
+		},
+		"concurrencyFailure": "出现并发提交. 您的提交被拒绝.",
+		"validation": "服务器校验失败.",
+		"internalServerError": "Internal server error",
+		"server.not.reachable": "服务器无法访问",
+		"url.not.found": "Not found",
+		"NotNull": "域 {{fieldName}} 不能为空!",
+		"Size": "域 {{fieldName}} 不满足最大/最小值限制!",
+		"userexists": "该用户名已存在!",
+		"emailexists": "该邮箱已被使用!",
+		"idexists": "新建的 {{entityName}} 不能包含ID",
+		"duplicateKey": "字段'{{key}}'存在重复值"
+	},
+	"global": {
+		"title": "Ngx Simple",
+		"browsehappy": "您目前使用<strong>过于老旧</strong>的浏览器, 建议您<a href=\"http://browsehappy.com/?locale=en\">升级浏览器</a>让您有更佳的上网体验.",
+		"menu": {
+			"home": "首页",
+			"entities": {
+				"main": "数据"
+			},
+			"account": {
+				"main": "账号",
+				"settings": "设置",
+				"password": "密码",
+				"sessions": "会话",
+				"login": "登录",
+				"logout": "退出",
+				"register": "注册"
+			},
+			"admin": {
+				"main": "管理",
+				"userManagement": "用户管理",
+				"tracker": "追踪使用者",
+				"metrics": "资源监控",
+				"health": "服务状态",
+				"configuration": "配置",
+				"logs": "日志",
+				"audits": "审核",
+				"apidocs": "API",
+				"database": "数据库"
+			},
+			"language": "语言"
+		},
+		"form": {
+			"username": "账号",
+			"username.placeholder": "您的账号",
+			"newpassword": "新密码",
+			"newpassword.placeholder": "您的新密码",
+			"confirmpassword": "新密码确认",
+			"confirmpassword.placeholder": "确认您的新密码",
+			"email": "电子邮件",
+			"email.placeholder": "您的电子邮件"
+		},
+		"placeholder": {
+			"input": "请输入{{field}}",
+			"select": "请选择{{field}}"
+		},
+		"messages": {
+			"info": {
+				"authenticated": {
+					"prefix": "如果您要",
+					"link": "登录",
+					"suffix": ", 您可以使用默认账号:<br/>- 管理员 (账号=\"admin\"和密码=\"admin\") <br/>- 普通用户 (账号=\"user\"和密码=\"user\")."
+				},
+				"register": {
+					"noaccount": "您还没有账号",
+					"link": "注册一个新账号"
+				}
+			},
+			"error": {
+				"dontmatch": "您输入的密码和确认密码不匹配!"
+			},
+			"validate": {
+				"newpassword": {
+					"required": "您的密码是必填项.",
+					"minlength": "您的密码长度至少要有5个字符",
+					"maxlength": "您的密码长度不能超过50个字符",
+					"invalid": "您的密码长度应为{{min}}~{{max}}个字符",
+					"strength": "密码强度:"
+				},
+				"confirmpassword": {
+					"required": "您的确认密码是必填项.",
+					"minlength": "您的确认密码长度至少要有5个字符",
+					"maxlength": "您的确认密码长度不能超过50个字符"
+				},
+				"email": {
+					"required": "您的电子邮件是必填项.",
+					"invalid": "您的电子邮件格式格式不正确.",
+					"minlength": "您的电子邮件长度至少要有5个字符",
+					"maxlength": "您的电子邮件长度不能超过50个字符"
+				}
+			}
+		},
+		"field": {
+			"id": "ID"
+		},
+		"ribbon": {
+			"dev": "Development"
+		},
+		"item-count": "显示第 {{first}} - {{second}} 条，共 {{total}} 条"
+	},
+	"entity": {
+		"action": {
+			"addblob": "增加 BLOB",
+			"addimage": "增加图片",
+			"back": "返回",
+			"cancel": "取消",
+			"delete": "删除",
+			"edit": "编辑",
+			"open": "Open",
+			"save": "保存",
+			"saveandnew": "保存&新增",
+			"view": "查看",
+			"result": {
+				"created": "{{ param }} 创建成功",
+				"updated": "{{ param }} 更新成功",
+				"deleted": "{{ param }} 删除成功",
+				"delete": {
+					"question": "你确定要删除 {{ params }} ?"
+				},
+				"stop": "成功停止 {{ param }} 条数据",
+				"start": "成功启用 {{ param }} 条数据",
+				"add": "总共完成 {{ param }} 条信息的添加"
+			}
+		},
+		"detail": {
+			"field": "字段",
+			"value": "值"
+		},
+		"delete": {
+			"title": "确认删除"
+		},
+		"validation": {
+			"required": "本字段不能为空.",
+			"minlength": "本字段最短长度为 {{min}} 个字符.",
+			"maxlength": "本字段最大长度为 {{max}} 个字符.",
+			"min": "本字段不能小于 {{min}}.",
+			"max": "本字段不能大于 {{max}}.",
+			"minbytes": "本字段不少于 {{min}} 字符.",
+			"maxbytes": "本字段不多余 {{max}} 字符.",
+			"pattern": "本字段必须符合模式 {{pattern}}.",
+			"number": "本字段必须为数字.",
+			"datetimelocal": "本字段必须为日期和时间.",
+			"numbererror": "本字段数值必须为符合条件的数值.",
+			"phone": "请输入正确的手机号",
+			"url": "链接格式不正确",
+			"integer": "请输入整数"
+		}
+	},
+	"footer": "Powered by <a href=\"https://github.com/vazmin\">@vazmin</a> ©2019",
+	"redis": {
+		"action": {
+			"result": {
+				"sortOut": "本次整理 {{ param }} 条数据"
+			}
+		}
+	},
+	"groupInfo": {
+		"groupMemo": "备注",
+		"groupName": "业务组名",
+		"createTime": "创建时间",
+		"departmentId": "所属部门id",
+		"id": "业务组id",
+		"status": "0-停用"
+	},
+	"login": {
+		"title": "登录",
+		"description": "你好! 请用你的用户名或邮箱登录",
+		"form": {
+			"password": "密码",
+			"password.placeholder": "您的密码",
+			"rememberme": "自动登录",
+			"button": "登录"
+		},
+		"messages": {
+			"error": {
+				"authentication": "<strong>登录失败!</strong> 请检查您的登录信息, 并重试一次."
+			}
+		},
+		"password": {
+			"forgot": "忘记密码?"
+		}
+	},
+	"manageRole": {
+		"manager": "是否是管理层",
+		"name": "角色名",
+		"memo": "备注",
+		"id": "角色id",
+		"status": "状态"
+	},
+	"manageUser": {
+		"password": "登录密码",
+		"sendEmail": "是否发送系统邮件",
+		"phone": "电话",
+		"openid": "微信公众号对应的openid",
+		"name": "姓名",
+		"memo": "备注",
+		"id": "用户id",
+		"lastVisitDate": "最后访问时间",
+		"email": "业务邮箱",
+		"username": "系统用户名（邮箱）",
+		"status": "锁定状态",
+		"createDate": "创建时间"
+	},
+	"menuInfo": {
+		"path": "访问路径",
+		"discard": "是否舍弃",
+		"code": "条目编码",
+		"orderNumber": "同级显示顺序",
+		"enable": "是否启用",
+		"pkgName": "包名",
+		"id": "条目id",
+		"value": "条目名称",
+		"parentId": "上级id"
+	},
+	"moduleInfo": {
+		"path": "访问路径",
+		"discard": "是否舍弃",
+		"code": "条目编码",
+		"orderNumber": "同级显示顺序",
+		"enable": "是否启用",
+		"pkgName": "包名和类名",
+		"id": "条目id",
+		"value": "条目名称",
+		"parentId": "上级id",
+		"inletUri": "模块入口地址"
+	},
+	"partnerUser": {
+		"openid": "渠道类型",
+		"memo": "密码",
+		"avatar": "头像",
+		"lastVisitDate": "最后访问时间",
+		"password": "登录密码",
+		"sendEmail": "是否发送系统邮件",
+		"phone": "电话",
+		"name": "姓名",
+		"id": "用户id",
+		"email": "业务邮箱",
+		"username": "用户名",
+		"status": "锁定状态",
+		"createDate": "创建时间"
+	},
+	"systemMessage": {
+		"messageTime": "消息时间",
+		"messageModule": "消息所在模块（类）",
+		"messageLevel": "消息级别",
+		"messageLine": "消息所在位置",
+		"id": "记录id",
+		"title": "消息标题",
+		"message": "消息内容"
+	},
+	"systemNoticeLog": {
+		"result": "通知结果",
+		"sendContent": "发送内容",
+		"noticeType": "通知类型",
+		"id": "记录id",
+		"sendMode": "发送方式",
+		"userId": "用户id",
+		"noticeTime": "通知时间"
+	},
+	"taskInfo": {
+		"executorId": "执行者id",
+		"createTime": "创建时间",
+		"roleId": "角色id",
+		"name": "任务名称",
+		"remark": "备注",
+		"startTime": "开始时间",
+		"id": "记录id",
+		"endTime": "结束时间",
+		"ownerId": "所有者id",
+		"projectId": "项目id",
+		"completeNotice": "完成时通知",
+		"status": "状态"
+	}
+}

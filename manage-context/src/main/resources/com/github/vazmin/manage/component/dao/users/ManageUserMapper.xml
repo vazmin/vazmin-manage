@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.vazmin.manage.component.dao.users.ManageUserMapper">
+
+    <sql id="tableName">manage_user</sql>
+
+    <sql id="columns_no_id">
+        username, password, name, phone, email, openid, memo, send_email, status,
+        create_date, last_visit_date, reset_key, reset_date
+    </sql>
+
+    <sql id="columns">
+        id, <include refid="columns_no_id"/>
+    </sql>
+
+    <sql id="columns_join">
+        a.id, a.username, a.password, a.name, a.phone, a.email, a.openid,
+        a.memo, a.send_email, a.status, a.create_date, a.last_visit_date,
+        a.reset_key, a.reset_date
+    </sql>
+
+    <sql id="likeWhere" databaseId="mysql">
+        <if test="name not in {null, ''}">AND name LIKE CONCAT('%', #{name}, '%')</if>
+    </sql>
+
+    <sql id="dynamicWhere">
+        <where>
+            <if test="username not in {null, ''}">username = #{username}</if>
+            <if test="phone not in {null, ''}">AND phone = #{phone}</if>
+            <if test="email not in {null, ''}">AND email = #{email}</if>
+            <if test="openid not in {null, ''}">AND openid = #{openid}</if>
+            <if test="sendEmail != null">AND send_email = #{sendEmail}</if>
+            <if test="status not in {null, ''}">AND status = #{status}</if>
+            <if test="resetKey not in {null, ''}">AND reset_key = #{resetKey}</if>
+            <if test="resetDate not in {null, ''}">AND reset_date = #{resetDate}</if>
+            <if test="roleId not in {null, ''}">
+                AND id IN (
+                    SELECT DISTINCT user_id FROM user_role WHERE role_id=#{roleId}
+                )
+            </if>
+            <if test="rangeBeginTime != null">
+                AND last_visit_date >= #{rangeBeginTime}
+            </if>
+            <if test="idSet != null and idSet.size > 0">
+                AND id IN
+                <foreach item="item" index="index" collection="idSet"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <include refid="likeWhere"/>
+        </where>
+    </sql>
+
+    <sql id="whereExcludeDepartment">
+        <where>
+            AND id NOT IN (
+                SELECT user_id FROM department_user WHERE department_id=#{departmentId}
+            )
+            <include refid="likeWhere"/>
+        </where>
+    </sql>
+
+    <sql id="whereExcludeGroup">
+        <where>
+            AND id IN (
+                SELECT user_id FROM department_user WHERE department_id=#{departmentId}
+            )
+            AND id NOT IN (
+                SELECT user_id FROM group_user WHERE group_id=#{groupId}
+            )
+            <include refid="likeWhere"/>
+        </where>
+    </sql>
+
+    <select id="get" resultType="ManageUser" parameterType="long">
+        SELECT <include refid="columns"/>
+        FROM <include refid="tableName"/>
+        WHERE id = #{id}
+    </select>
+
+    <select id="getByDynamicWhere" resultType="ManageUser">
+        SELECT <include refid="columns"/>
+        FROM <include refid="tableName"/>
+        <include refid="dynamicWhere"/>
+    </select>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(1)
+        FROM <include refid="tableName"/>
+        <include refid="dynamicWhere"/>
+    </select>
+
+    <select id="getCountExcludeDepartment" resultType="int">
+        SELECT COUNT(1)
+        FROM <include refid="tableName"/>
+        <include refid="whereExcludeDepartment"/>
+    </select>
+
+    <select id="getCountExcludeGroup" resultType="int">
+        SELECT COUNT(1)
+        FROM <include refid="tableName"/>
+        <include refid="whereExcludeGroup"/>
+    </select>
+
+    <select id="getList" resultType="ManageUser">
+        SELECT <include refid="columns_join"/>
+        FROM <include refid="tableName"/> a
+        <include refid="dynamicWhere"/>
+        <if test="fullordering not in {null, ''}">
+            ORDER BY ${fullordering}
+        </if>
+    </select>
+
+    <select id="getListExcludeDepartment" resultType="ManageUser">
+        SELECT <include refid="columns_join"/>
+        FROM <include refid="tableName"/> a
+        <include refid="whereExcludeDepartment"/>
+        <if test="fullordering not in {null, ''}">
+            ORDER BY ${fullordering}
+        </if>
+    </select>
+
+    <select id="getListExcludeGroup" resultType="ManageUser">
+        SELECT <include refid="columns_join"/>
+        FROM <include refid="tableName"/> a
+        <include refid="whereExcludeGroup"/>
+        <if test="fullordering not in {null, ''}">
+            ORDER BY ${fullordering}
+        </if>
+    </select>
+
+    <select id="getListOpen" resultType="ManageUser">
+        SELECT a.id, a.username, a.name
+        FROM <include refid="tableName"/> a
+        <include refid="dynamicWhere"/>
+        <if test="fullordering not in {null, ''}">
+            ORDER BY ${fullordering}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="ManageUser" useGeneratedKeys="true"
+            keyProperty="id" >
+        INSERT IGNORE INTO <include refid="tableName"/>
+        (<include refid="columns_no_id"/>)
+        VALUES
+        (#{username}, #{password}, #{name}, #{phone}, #{email}, #{openid},
+        #{memo}, #{sendEmail}, #{status}, #{createDate}, #{lastVisitDate},
+          #{resetKey}, #{resetDate})
+    </insert>
+
+    <update id="update" parameterType="ManageUser">
+        UPDATE <include refid="tableName"/>
+        <set>
+            <if test="username not in {null, ''}">username=#{username},</if>
+            <if test="password not in {null, ''}">password=#{password},</if>
+            <if test="name not in {null, ''}">name=#{name},</if>
+            <if test="phone not in {null, ''}">phone=#{phone},</if>
+            <if test="email not in {null, ''}">email=#{email},</if>
+            <if test="openid not in {null, ''}">openid=#{openid},</if>
+            <if test="memo not in {null, ''}">memo=#{memo},</if>
+            <if test="sendEmail != null">send_email = #{sendEmail},</if>
+            <if test="status != null">status=#{status},</if>
+            reset_key=#{resetKey},
+            reset_date=#{resetDate}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateLastVisitDate">
+        UPDATE <include refid="tableName"/>
+        SET last_visit_date = #{lastVisitDate}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateOpenid">
+        UPDATE <include refid="tableName"/>
+        SET openid = #{openid}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateStatus">
+        UPDATE <include refid="tableName"/>
+        SET status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <update id="removeOpenid">
+        UPDATE <include refid="tableName"/>
+        SET openid = #{openid}
+        WHERE openid = ''
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM <include refid="tableName"/> WHERE id = #{id}
+    </delete>
+
+    <delete id="batchDelete">
+        DELETE FROM <include refid="tableName"/>
+        WHERE id IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

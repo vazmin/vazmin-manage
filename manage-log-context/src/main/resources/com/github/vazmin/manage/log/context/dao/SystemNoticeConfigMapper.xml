@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.vazmin.manage.log.context.dao.SystemNoticeConfigMapper">
+
+    <sql id="tableName">system_notice_config</sql>
+
+    <sql id="columns_no_id">
+        user_id, notice_type, receive_email, receive_wechat
+    </sql>
+
+    <sql id="columns">
+        id, <include refid="columns_no_id"/>
+    </sql>
+
+    <sql id="columns_join">
+        a.id, a.user_id, a.notice_type, a.receive_email, a.receive_wechat
+        
+    </sql>
+
+    <sql id="likeWhere" databaseId="mysql">
+    </sql>
+
+    <sql id="dynamicWhere">
+        <where>
+            <if test="userId not in {null, ''}">a.user_id = #{userId}</if>
+            <if test="noticeType != null">AND a.notice_type = #{noticeType}</if>
+            <if test="receiveEmail != null">AND a.receive_email = #{receiveEmail}</if>
+            <if test="receiveWechat != null">AND a.receive_wechat = #{receiveWechat}</if>
+            <include refid="likeWhere"/>
+        </where>
+    </sql>
+
+    <select id="get" resultType="SystemNoticeConfig" parameterType="long">
+        SELECT <include refid="columns_join"/>
+        FROM <include refid="tableName"/> a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="getLeftJoin" resultType="SystemNoticeConfig">
+        SELECT <include refid="columns_join"/> , b.username, b.email, b.phone,c.description AS noticeTypeDescription
+        FROM <include refid="tableName"/> a
+        LEFT JOIN manage_user b ON a.user_id = b.id
+        LEFT JOIN notice_type c ON a.notice_type = c.id
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="getByDynamicWhere" resultType="SystemNoticeConfig">
+        SELECT <include refid="columns_join"/>
+        FROM <include refid="tableName"/> a
+        <include refid="dynamicWhere"/>
+    </select>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(1)
+        FROM <include refid="tableName"/> a
+        <include refid="dynamicWhere"/>
+    </select>
+
+    <select id="getList" resultType="SystemNoticeConfig">
+        SELECT <include refid="columns_join"/>
+        FROM <include refid="tableName"/> a
+        <include refid="dynamicWhere"/>
+        <if test="fullordering not in {null, ''}">
+            ORDER BY ${fullordering}
+        </if>
+    </select>
+
+    <select id="getListLeftJoin" resultType="SystemNoticeConfig">
+        SELECT <include refid="columns_join"/> , b.username, b.email, b.phone, b.openid,c.description AS noticeTypeDescription
+        FROM <include refid="tableName"/> a
+        LEFT JOIN manage_user b ON a.user_id = b.id
+        LEFT JOIN notice_type c ON a.notice_type = c.id
+        <include refid="dynamicWhere"/>
+        <if test="fullordering not in {null, ''}">
+            ORDER BY ${fullordering}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="SystemNoticeConfig" useGeneratedKeys="true"
+            keyProperty="id" >
+        INSERT IGNORE INTO <include refid="tableName"/>
+        (<include refid="columns_no_id"/>)
+        VALUES
+        (
+        #{userId}, #{noticeType}, #{receiveEmail}, #{receiveWechat}
+        )
+    </insert>
+
+    <update id="update" parameterType="SystemNoticeConfig">
+        UPDATE <include refid="tableName"/>
+        <set>
+            <if test="userId not in {null, ''}">user_id=#{userId}, </if>
+            <if test="noticeType != null">notice_type=#{noticeType}, </if>
+            <if test="receiveEmail != null">receive_email=#{receiveEmail}, </if>
+            <if test="receiveWechat != null">receive_wechat=#{receiveWechat}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM <include refid="tableName"/> WHERE id = #{id}
+    </delete>
+
+    <delete id="batchDelete">
+        DELETE FROM <include refid="tableName"/>
+        WHERE id IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

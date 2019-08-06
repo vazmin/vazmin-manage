@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.vazmin.manage.component.dao.users.DepartmentUserMapper">
+
+    <sql id="tableName">department_user</sql>
+
+    <sql id="columns_no_id">
+        department_id, user_id, user_position, assign_time
+    </sql>
+
+    <sql id="columns">
+        id, <include refid="columns_no_id"/>
+    </sql>
+
+    <sql id="columns_join">
+        a.id, a.department_id, a.user_id, a.user_position, a.assign_time
+    </sql>
+
+    <sql id="likeWhere" databaseId="mysql">
+    </sql>
+
+    <sql id="dynamicWhere">
+        <where>
+            <if test="departmentId not in {null, ''}">a.department_id = #{departmentId}</if>
+            <if test="userId not in {null, ''}">AND a.user_id = #{userId}</if>
+            <if test="userPosition not in {null, ''}">AND a.user_position = #{userPosition}</if>
+            <if test="assignTime not in {null, ''}">AND a.assign_time = #{assignTime}</if>
+            <include refid="likeWhere"/>
+        </where>
+    </sql>
+
+    <select id="get" resultType="DepartmentUser" parameterType="long">
+        SELECT <include refid="columns_join"/>
+        FROM <include refid="tableName"/> a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="getLeftJoin" resultType="DepartmentUser" parameterType="long">
+        SELECT <include refid="columns_join"/>,b.name user_name
+        FROM <include refid="tableName"/> a
+        LEFT JOIN manage_user b ON a.user_id = b.id
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="getByDynamicWhere" resultType="DepartmentUser">
+        SELECT <include refid="columns_join"/>
+        FROM <include refid="tableName"/> a
+        <include refid="dynamicWhere"/>
+    </select>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(1)
+        FROM <include refid="tableName"/> a
+        <include refid="dynamicWhere"/>
+    </select>
+
+    <select id="getList" resultType="DepartmentUser">
+        SELECT <include refid="columns_join"/>
+        FROM <include refid="tableName"/> a
+        <include refid="dynamicWhere"/>
+        <if test="fullordering not in {null, ''}">
+            ORDER BY ${fullordering}
+        </if>
+    </select>
+
+    <select id="getListLeftJoin" resultType="DepartmentUser">
+        SELECT <include refid="columns_join"/>,b.name user_name
+        FROM <include refid="tableName"/> a
+        LEFT JOIN manage_user b ON a.user_id = b.id
+        WHERE a.department_id = #{departmentId}
+        <if test="userName not in {null, ''}">AND b.name = #{userName}</if>
+        <if test="userPosition not in {null, ''}">AND a.user_position = #{userPosition}</if>
+        <if test="fullordering not in {null, ''}">
+            ORDER BY ${fullordering}
+        </if>
+    </select>
+
+    <select id="getUngroupList" resultType="DepartmentUser">
+        SELECT <include refid="columns_join"/>,b.name user_name
+        FROM <include refid="tableName"/> a,manage_user b
+        WHERE a.department_id = #{departmentId}
+            AND a.user_id = b.id
+            AND a.user_id NOT IN (
+                SELECT c.user_id FROM group_user c,group_info d
+                WHERE c.group_id=d.id AND d.department_id=#{departmentId})
+    </select>
+
+    <insert id="insert" parameterType="DepartmentUser" useGeneratedKeys="true"
+            keyProperty="id" >
+        INSERT INTO <include refid="tableName"/>
+        (<include refid="columns_no_id"/>)
+        VALUES
+        (
+        #{departmentId}, #{userId}, #{userPosition}, #{assignTime}
+        )
+    </insert>
+
+    <update id="update" parameterType="DepartmentUser">
+        UPDATE <include refid="tableName"/>
+        <set>
+            <if test="departmentId not in {null, ''}">department_id=#{departmentId}, </if>
+            <if test="userId not in {null, ''}">user_id=#{userId}, </if>
+            <if test="userPosition not in {null, ''}">user_position=#{userPosition}, </if>
+            <if test="assignTime not in {null, ''}">assign_time=#{assignTime}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM <include refid="tableName"/> WHERE id = #{id}
+    </delete>
+
+    <delete id="batchDelete">
+        DELETE FROM <include refid="tableName"/>
+        WHERE id IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

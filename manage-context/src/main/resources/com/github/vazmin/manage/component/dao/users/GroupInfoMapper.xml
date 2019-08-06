@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.vazmin.manage.component.dao.users.GroupInfoMapper">
+
+    <sql id="tableName">group_info</sql>
+
+    <sql id="columns_no_id">
+        department_id, group_name, group_memo, status, create_time
+        
+    </sql>
+
+    <sql id="columns">
+        id, <include refid="columns_no_id"/>
+    </sql>
+
+    <sql id="columns_join">
+        a.id, a.department_id, a.group_name, a.group_memo, a.status, 
+        a.create_time
+    </sql>
+
+    <sql id="likeWhere" databaseId="mysql">
+    </sql>
+
+    <sql id="dynamicWhere">
+        <where>
+            <if test="departmentId not in {null, ''}">a.department_id = #{departmentId}</if>
+            <if test="groupName not in {null, ''}">AND a.group_name = #{groupName}</if>
+            <if test="groupMemo not in {null, ''}">AND a.group_memo = #{groupMemo}</if>
+            <if test="status != null">AND a.status = #{status}</if>
+            <if test="createTime not in {null, ''}">AND a.create_time = #{createTime}</if>
+            <include refid="likeWhere"/>
+        </where>
+    </sql>
+
+    <select id="get" resultType="GroupInfo" parameterType="long">
+        SELECT <include refid="columns_join"/>
+        FROM <include refid="tableName"/> a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="getByDynamicWhere" resultType="GroupInfo">
+        SELECT <include refid="columns_join"/>
+        FROM <include refid="tableName"/> a
+        <include refid="dynamicWhere"/>
+    </select>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(1)
+        FROM <include refid="tableName"/> a
+        <include refid="dynamicWhere"/>
+    </select>
+
+    <select id="getList" resultType="GroupInfo">
+        SELECT <include refid="columns_join"/>
+        FROM <include refid="tableName"/> a
+        <include refid="dynamicWhere"/>
+        <if test="fullordering not in {null, ''}">
+            ORDER BY ${fullordering}
+        </if>
+    </select>
+
+    <select id="getListLeftJoin" resultType="GroupInfo">
+        SELECT <include refid="columns_join"/>,COUNT(DISTINCT user_id) member_count
+        FROM <include refid="tableName"/> a
+        LEFT JOIN group_user b ON a.id = b.group_id
+        <include refid="dynamicWhere"/>
+        GROUP BY a.id
+        <if test="fullordering not in {null, ''}">
+            ORDER BY ${fullordering}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="GroupInfo" useGeneratedKeys="true"
+            keyProperty="id" >
+        INSERT IGNORE INTO <include refid="tableName"/>
+        (<include refid="columns_no_id"/>)
+        VALUES
+        (
+        #{departmentId}, #{groupName}, #{groupMemo}, #{status}, #{createTime}
+        
+        )
+    </insert>
+
+    <update id="update" parameterType="GroupInfo">
+        UPDATE <include refid="tableName"/>
+        <set>
+            <if test="departmentId not in {null, ''}">department_id=#{departmentId}, </if>
+            <if test="groupName not in {null, ''}">group_name=#{groupName}, </if>
+            <if test="groupMemo not in {null, ''}">group_memo=#{groupMemo}, </if>
+            <if test="status not in {null, ''}">status=#{status}, </if>
+            <if test="createTime not in {null, ''}">create_time=#{createTime}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM <include refid="tableName"/> WHERE id = #{id}
+    </delete>
+
+    <delete id="batchDelete">
+        DELETE FROM <include refid="tableName"/>
+        WHERE id IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

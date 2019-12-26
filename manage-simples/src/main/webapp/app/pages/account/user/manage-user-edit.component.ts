@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ManageUserService} from './manage-user.service';
 import {AbstractManageEditComponent} from '../../../shared/manage/abstract-manage-edit.component';
 import {ManageRoleService} from '../role/manage-role.service';
+import {IManageUser} from './manage-user.model';
 
 @Component({
     selector: 'ngx-manage-user-edit',
@@ -10,11 +11,11 @@ import {ManageRoleService} from '../role/manage-role.service';
 })
 export class ManageUserEditComponent extends AbstractManageEditComponent {
 
-    getData() {
+    getData(): IManageUser {
         return this.manageUser;
     }
 
-    setData(data: any) {
+    setData(data: IManageUser) {
         this.manageUser = data;
         this.manageRoleService.list().subscribe((res) => {
             this.roleList = res.body;
@@ -27,7 +28,7 @@ export class ManageUserEditComponent extends AbstractManageEditComponent {
         console.log(this.manageUser);
     }
 
-    manageUser: any;
+    manageUser: IManageUser;
     roleList: any[];
     passwordLength= {
         max: 20,

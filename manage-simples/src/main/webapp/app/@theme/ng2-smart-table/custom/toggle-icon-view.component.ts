@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {ViewCell} from '../index';
+import {ViewCell} from '..';
 
 @Component({
     selector: 'ngx-status-icon-view',

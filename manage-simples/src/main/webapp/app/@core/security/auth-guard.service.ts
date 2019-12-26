@@ -46,7 +46,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             //     return true;
             // }
 
-
             if (principalInfo) {
                 if (accessIsAuthenticated) {
                     return true;

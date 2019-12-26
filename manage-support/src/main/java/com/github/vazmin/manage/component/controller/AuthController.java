@@ -32,7 +32,6 @@ import javax.validation.Valid;
  */
 @Controller
 @RequestMapping("/api")
-@Module(value = AuthController.MODULE_NAME, order = 2, hideInMenu = true)
 public class AuthController {
 
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
@@ -95,25 +94,6 @@ public class AuthController {
         return new ResponseEntity<>("session out...", HttpStatus.UNAUTHORIZED);
     }
 
-    /**
-     * 修改密码
-     * @param keyAndPassword 新老密码
-     * @throws ServiceProcessException
-     */
-    @ResponseBody
-    @RequestMapping(value = "/account/password", method = RequestMethod.POST)
-    @Command(value = MODULE_NAME + " 修改密码", allowAccessAuthenticated = true)
-    public void changePassword(@Valid @RequestBody KeyAndPasswordVM keyAndPassword)
-            throws ServiceProcessException {
-        ManageUserDetails manageUserDetails =
-                (ManageUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (manageUserDetails.getManageUser().isAdmin()) {
-            throw new ServiceProcessException("Admin can't change password!");
-        }
-        manageUserService.changePassword(
-                manageUserDetails.getManageUser().getId(),
-                keyAndPassword.getKey(), keyAndPassword.getNewPassword());
-    }
 
     /**
      * 请求重置密码

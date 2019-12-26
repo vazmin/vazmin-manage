@@ -1,5 +1,6 @@
 package com.github.vazmin.manage.component.model.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.github.vazmin.framework.core.enu.StatusEnum;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.Set;
  * URP用户信息Bean
  *
  */
+@JsonIgnoreProperties({"password", "resetKey"})
 public class ManageUser implements Serializable {
     private static final long serialVersionUID = 721326756473686798L;
     /** 用户id */

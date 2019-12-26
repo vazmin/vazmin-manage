@@ -19,7 +19,7 @@ export class AccountService {
     }
 
     changePassword(oldPass: string, newPass: string): Observable<HttpResponse<any>> {
-        return this.http.post(environment.SERVER_API_URL + 'api/account/password',
+        return this.http.post(environment.SERVER_API_URL + 'api/account/user/password',
             {key: oldPass, newPassword: newPass}, {observe: 'response'});
     }
 

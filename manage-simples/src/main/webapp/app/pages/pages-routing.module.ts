@@ -21,8 +21,11 @@ const routes: Routes = [{
     }, {
         path: 'system',
         loadChildren: './system/system.module#SystemModule',
-    },
-      {
+    }, {
+        path: '',
+        redirectTo: 'foo',
+        pathMatch: 'full',
+    }, {
         path: '**',
         component: NotFoundComponent,
         data: {

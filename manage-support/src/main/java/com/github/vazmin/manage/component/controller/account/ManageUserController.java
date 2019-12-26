@@ -13,8 +13,10 @@ import com.github.vazmin.manage.component.service.users.ManageUserService;
 import com.github.vazmin.manage.component.service.users.UserPrivilegeService;
 import com.github.vazmin.manage.component.model.NgxTreeItem;
 import com.github.vazmin.manage.component.controller.errors.BadRequestAlertException;
+import com.github.vazmin.manage.component.vm.KeyAndPasswordVM;
 import com.github.vazmin.manage.component.vm.UserPrivilegeVM;
 import com.github.vazmin.manage.support.query.Query;
+import com.github.vazmin.manage.support.security.ManageUserDetails;
 import com.github.vazmin.manage.support.util.HeaderUtil;
 import com.github.vazmin.manage.support.util.PaginationUtil;
 import com.github.vazmin.manage.support.util.ResponseUtil;
@@ -24,8 +26,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -61,7 +65,7 @@ public class ManageUserController implements ManageControllerInterface, ManageAu
      */
     @Command(MODULE_NAME + " list")
     @RequestMapping(value = LIST_URL, method = RequestMethod.GET)
-    public ResponseEntity list(Pagination pagination, Query query) {
+    public ResponseEntity<List<ManageUser>> list(Pagination pagination, Query query) {
 
         List<ManageUser> manageUserList
                 = manageUserService.getList(pagination, query.getFilter());
@@ -138,6 +142,26 @@ public class ManageUserController implements ManageControllerInterface, ManageAu
     public ResponseEntity<Void> delete(@RequestParam String ids) throws ServiceProcessException {
         manageUserService.batchDelete(LongTools.parseList(ids));
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ids)).build();
+    }
+
+    /**
+     * 修改密码
+     * @param keyAndPassword 新老密码
+     * @throws ServiceProcessException
+     */
+    @ResponseBody
+    @RequestMapping(value = "/password", method = RequestMethod.POST)
+    @Command(value = MODULE_NAME + " 修改密码", allowAccessAuthenticated = true)
+    public void changePassword(@RequestAttribute ManageUser manageUser, @Valid @RequestBody KeyAndPasswordVM keyAndPassword)
+            throws ServiceProcessException {
+        ManageUserDetails manageUserDetails =
+                (ManageUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (manageUserDetails.getManageUser().isAdmin()) {
+            throw new ServiceProcessException("Admin can't change password!");
+        }
+        manageUserService.changePassword(
+                manageUserDetails.getManageUser().getId(),
+                keyAndPassword.getKey(), keyAndPassword.getNewPassword());
     }
 
     /**

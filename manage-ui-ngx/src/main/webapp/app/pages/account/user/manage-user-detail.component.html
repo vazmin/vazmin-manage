@@ -1,0 +1,70 @@
+<nb-card>
+    <nb-card-header>
+    平台用户信息 详细信息
+    </nb-card-header>
+
+    <nb-card-body class="p-0">
+        <ul *ngIf="manageUser" class="detail-list">
+          <li>
+            <div class="field" ngxTranslate="manageUser.id">用户id</div>
+            <div class="value">{{manageUser.id}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="manageUser.username">系统用户名（邮箱）</div>
+            <div class="value">{{manageUser.username}}</div>
+          </li>
+<!--          <li>-->
+<!--            <div class="field" ngxTranslate="manageUser.password">登录密码</div>-->
+<!--            <div class="value">******</div>-->
+<!--          </li>-->
+          <li>
+            <div class="field" ngxTranslate="manageUser.name">姓名</div>
+            <div class="value">{{manageUser.name}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="manageUser.phone">电话</div>
+            <div class="value">{{manageUser.phone}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="manageUser.email">业务邮箱</div>
+            <div class="value">{{manageUser.email}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="manageUser.openid">微信公众号对应的openid</div>
+            <div class="value">{{manageUser.openid}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="manageUser.memo">备注</div>
+            <div class="value">{{manageUser.memo}}</div>
+          </li>
+<!--          <li>-->
+<!--            <div class="field" ngxTranslate="manageUser.sendEmail">是否发送系统邮件</div>-->
+<!--            <div class="value">-->
+<!--              <i class="icon"-->
+<!--                 [ngClass]="{'text-success ion-md-checkmark-circle ': manageUser.sendEmail,'text-danger ion-md-close-circle': !manageUser.sendEmail}">-->
+<!--              </i>-->
+<!--            </div>-->
+<!--          </li>-->
+          <li>
+            <div class="field" ngxTranslate="manageUser.status">锁定状态</div>
+            <div class="value">
+              <i class="icon"
+                 [ngClass]="{'text-success ion-md-unlock ': manageUser.status,
+                 'text-danger ion-md-lock': !manageUser.status}">
+              </i>
+            </div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="manageUser.createDate">创建时间</div>
+            <div class="value">{{manageUser.createDate * 1000 | date: dateTimeFormat}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="manageUser.lastVisitDate">最后访问时间</div>
+            <div class="value">{{manageUser.lastVisitDate * 1000 | date: dateTimeFormat}}</div>
+          </li>
+        </ul>
+    </nb-card-body>
+    <nb-card-footer>
+        <button class="btn btn-primary" routerLink="/pages/account/user">返回</button>
+    </nb-card-footer>
+</nb-card>

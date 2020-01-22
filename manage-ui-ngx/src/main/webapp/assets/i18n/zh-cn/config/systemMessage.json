@@ -1,0 +1,11 @@
+{
+  "systemMessage": {
+    "messageTime": "消息时间",
+    "messageModule": "消息所在模块（类）",
+    "messageLevel": "消息级别",
+    "messageLine": "消息所在位置",
+    "id": "记录id",
+    "title": "消息标题",
+    "message": "消息内容"
+  }
+}

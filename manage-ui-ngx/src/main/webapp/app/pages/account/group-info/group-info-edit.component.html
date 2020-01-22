@@ -1,0 +1,115 @@
+<nb-card>
+  <nb-card-header>
+    {{ groupInfo && groupInfo.groupName != null ? groupInfo.groupName : '' }}
+    {{ groupInfo && groupInfo.id ? '编辑' : '新增'}}
+  </nb-card-header>
+
+  <nb-card-body>
+    <div *ngIf="groupInfo" class="form-group">
+      <form name="editForm" role="form" (ngSubmit)="save()" #editForm="ngForm">
+
+        <ngx-alert></ngx-alert>
+        <ngx-alert-error></ngx-alert-error>
+        <div class="form-group">
+          <label for="departmentId" ngxTranslate="groupInfo.departmentId">所属部门id</label>
+          <input type="text" class="form-control" placeholder="departmentId"
+                 [(ngModel)]="groupInfo.departmentId"
+                 name="departmentId"
+                 #departmentIdInput="ngModel"
+                 [class.form-control-danger]="departmentIdInput.invalid && departmentIdInput.touched"
+                 autofocus required="required"
+                 id="departmentId"/>
+          <div *ngIf="departmentIdInput.touched && departmentIdInput.invalid">
+            <small class="form-text error"
+                   *ngIf="departmentIdInput.errors?.required"
+                   ngxTranslate="entity.validation.required">
+                departmentId不能为空
+            </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="groupName" ngxTranslate="groupInfo.groupName">业务组名</label>
+          <input type="text" class="form-control" placeholder="groupName"
+                 [(ngModel)]="groupInfo.groupName"
+                 name="groupName"
+                 #groupNameInput="ngModel"
+                 [class.form-control-danger]="groupNameInput.invalid && groupNameInput.touched"
+                 autofocus required="required"
+                 id="groupName"/>
+          <div *ngIf="groupNameInput.touched && groupNameInput.invalid">
+            <small class="form-text error"
+                   *ngIf="groupNameInput.errors?.required"
+                   ngxTranslate="entity.validation.required">
+                groupName不能为空
+            </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="groupMemo" ngxTranslate="groupInfo.groupMemo">备注</label>
+          <input type="text" class="form-control" placeholder="groupMemo"
+                 [(ngModel)]="groupInfo.groupMemo"
+                 name="groupMemo"
+                 #groupMemoInput="ngModel"
+                 [class.form-control-danger]="groupMemoInput.invalid && groupMemoInput.touched"
+                 autofocus required="required"
+                 id="groupMemo"/>
+          <div *ngIf="groupMemoInput.touched && groupMemoInput.invalid">
+            <small class="form-text error"
+                   *ngIf="groupMemoInput.errors?.required"
+                   ngxTranslate="entity.validation.required">
+                groupMemo不能为空
+            </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="status" ngxTranslate="groupInfo.status">0-停用</label>
+          <input type="text" class="form-control" placeholder="status"
+                 [(ngModel)]="groupInfo.status"
+                 name="status"
+                 #statusInput="ngModel"
+                 [class.form-control-danger]="statusInput.invalid && statusInput.touched"
+                 autofocus required="required"
+                 id="status"/>
+          <div *ngIf="statusInput.touched && statusInput.invalid">
+            <small class="form-text error"
+                   *ngIf="statusInput.errors?.required"
+                   ngxTranslate="entity.validation.required">
+                status不能为空
+            </small>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="createTime" ngxTranslate="groupInfo.createTime">创建时间</label>
+          <input type="text" class="form-control" placeholder="createTime"
+                 [(ngModel)]="groupInfo.createTime"
+                 name="createTime"
+                 #createTimeInput="ngModel"
+                 [class.form-control-danger]="createTimeInput.invalid && createTimeInput.touched"
+                 autofocus required="required"
+                 id="createTime"/>
+          <div *ngIf="createTimeInput.touched && createTimeInput.invalid">
+            <small class="form-text error"
+                   *ngIf="createTimeInput.errors?.required"
+                   ngxTranslate="entity.validation.required">
+                createTime不能为空
+            </small>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-danger with-margins"
+                [disabled]="editForm.form.invalid || submitting"
+                ngxTranslate="entity.action.save">保存</button>
+        <button type="button" (click)="saveAndNew()" class="btn btn-success mr-2"
+                [disabled]="editForm.form.invalid || submitting "
+                ngxTranslate="entity.action.saveandnew">保存&新增
+        </button>
+        <button class="btn btn-primary with-margins"
+                ngxTranslate="entity.action.back"
+                routerLink="/pages/account/group-info">返回</button>
+      </form>
+
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+
+  </nb-card-footer>
+</nb-card>

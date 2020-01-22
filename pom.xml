@@ -13,6 +13,7 @@
         <module>manage-log-context</module>
         <module>manage-support</module>
         <module>manage-simples</module>
+        <module>manage-ui-ngx</module>
     </modules>
 
     <properties>
@@ -21,9 +22,9 @@
         <project.build.targetVersion>1.8</project.build.targetVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.jupiter.version>5.5.1</junit.jupiter.version>
-        <maven-clean-plugin.version>2.6.1</maven-clean-plugin.version>
-        <maven-war-plugin.version>2.6</maven-war-plugin.version>
-
+        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+        <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
+        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <spring.boot.version>2.1.6.RELEASE</spring.boot.version>
         <spring-security.version>5.1.5.RELEASE</spring-security.version>
 

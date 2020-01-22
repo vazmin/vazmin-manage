@@ -1,0 +1,37 @@
+<nb-card>
+    <nb-card-header>
+    业务组信息 详细信息
+    </nb-card-header>
+
+    <nb-card-body class="p-0">
+        <ul *ngIf="groupInfo" class="detail-list">
+          <li>
+            <div class="field" ngxTranslate="groupInfo.id">业务组id</div>
+            <div class="value">{{groupInfo.id}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="groupInfo.departmentId">所属部门id</div>
+            <div class="value">{{groupInfo.departmentId}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="groupInfo.groupName">业务组名</div>
+            <div class="value">{{groupInfo.groupName}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="groupInfo.groupMemo">备注</div>
+            <div class="value">{{groupInfo.groupMemo}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="groupInfo.status">0-停用</div>
+            <div class="value">{{groupInfo.status}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="groupInfo.createTime">创建时间</div>
+            <div class="value">{{groupInfo.createTime}}</div>
+          </li>
+        </ul>
+    </nb-card-body>
+    <nb-card-footer>
+        <button class="btn btn-primary" routerLink="/pages/account/group-info">返回</button>
+    </nb-card-footer>
+</nb-card>

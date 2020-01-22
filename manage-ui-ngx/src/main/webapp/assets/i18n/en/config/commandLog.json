@@ -1,0 +1,16 @@
+{
+  "commandLog": {
+    "commandName": "Command Name",
+    "actionTime": "Action Time",
+    "name": "Name",
+    "moduleName": "Module Name",
+    "userIp": "User Ip",
+    "id": "Id",
+    "resultMessage": "Result Message",
+    "userId": "User Id",
+    "commandId": "Command Id",
+    "parameters": "Parameters",
+    "requestPath": "Request Path",
+    "resultSuccesss": "Result Successs"
+  }
+}

@@ -1,8 +1,0 @@
-<ng-content></ng-content>
-<ng-container *ngIf="nzAutoGenerate">
-  <ngx-breadcrumb-item *ngFor="let breadcrumb of breadcrumbs">
-    <!-- We do not simply use routerLink here to avoid importing RouterModule to BreadcrumbModule. -->
-    <a [attr.href]="breadcrumb.url" (click)="navigate(breadcrumb.url, $event)" *ngIf="!breadcrumb.disabled">{{ breadcrumb.label }}</a>
-    <span *ngIf="breadcrumb.disabled">{{ breadcrumb.label }}</span>
-  </ngx-breadcrumb-item>
-</ng-container>

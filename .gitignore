@@ -28,4 +28,5 @@ target
 transaction-logs
 node_modules
 manage-simple/node
+node
 

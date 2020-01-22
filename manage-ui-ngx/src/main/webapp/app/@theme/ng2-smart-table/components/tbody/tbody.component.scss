@@ -1,0 +1,21 @@
+:host {
+  .ng2-smart-row {
+    &.selected {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .ng2-smart-actions {
+      &.ng2-smart-action-multiple-select {
+        text-align: center;
+      }
+    }
+  }
+}
+.custom-control.select-cb{
+  pointer-events: none;
+}
+.custom-control.select-cb .custom-control-label::before{
+  left: 1.25rem ;
+}
+.custom-control.select-cb .custom-control-label::after{
+  left: 1.6rem !important;
+}

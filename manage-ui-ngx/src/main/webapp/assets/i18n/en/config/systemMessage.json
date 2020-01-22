@@ -1,0 +1,11 @@
+{
+  "systemMessage": {
+    "messageTime": "Message Time",
+    "messageModule": "Message Module",
+    "messageLevel": "Message Level",
+    "messageLine": "Message Line",
+    "id": "Id",
+    "title": "Title",
+    "message": "Message"
+  }
+}

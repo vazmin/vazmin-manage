@@ -1,0 +1,55 @@
+<nb-card>
+    <nb-card-header>
+    系统通知记录 详细信息
+    </nb-card-header>
+
+    <nb-card-body class="p-0">
+        <ul *ngIf="systemNoticeLog" class="detail-list">
+          <li>
+            <div class="field" ngxTranslate="systemNoticeLog.id">记录id</div>
+            <div class="value">{{systemNoticeLog.id}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="systemNoticeLog.userId">用户id</div>
+            <div class="value">{{systemNoticeLog.username}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="systemNoticeLog.noticeType">通知类型</div>
+            <div class="value">{{systemNoticeLog.noticeTypeDescription}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="systemNoticeLog.sendMode">发送方式</div>
+            <div class="value">{{systemNoticeLog.sendModeDescription}}</div>
+          </li>
+          <li>
+            <div class="field" >标题</div>
+            <div class="value">{{systemNoticeLog.title}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="systemNoticeLog.sendContent">发送内容</div>
+            <div class="value">
+              <code>
+                <pre>
+                  {{systemNoticeLog.sendContent}}
+                </pre>
+              </code>
+            </div>
+          </li>
+          <li>
+            <div class="field" >异常消息</div>
+            <div class="value">{{systemNoticeLog.errorMsg}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="systemNoticeLog.noticeTime">通知时间</div>
+            <div class="value">{{systemNoticeLog.noticeTime * 1000 | date: dateFormat}}</div>
+          </li>
+          <li>
+            <div class="field" ngxTranslate="systemNoticeLog.result">通知结果</div>
+            <div class="value">{{systemNoticeLog.result}}</div>
+          </li>
+        </ul>
+    </nb-card-body>
+    <nb-card-footer>
+        <button class="btn btn-primary" routerLink="/pages/system/system-notice-log">返回</button>
+    </nb-card-footer>
+</nb-card>

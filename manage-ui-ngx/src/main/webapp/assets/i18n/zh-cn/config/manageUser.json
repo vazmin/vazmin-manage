@@ -1,0 +1,16 @@
+{
+  "manageUser": {
+    "password": "登录密码",
+    "sendEmail": "是否发送系统邮件",
+    "phone": "电话",
+    "openid": "微信公众号对应的openid",
+    "name": "姓名",
+    "memo": "备注",
+    "id": "用户id",
+    "lastVisitDate": "最后访问时间",
+    "email": "业务邮箱",
+    "username": "系统用户名（邮箱）",
+    "status": "锁定状态",
+    "createDate": "创建时间"
+  }
+}

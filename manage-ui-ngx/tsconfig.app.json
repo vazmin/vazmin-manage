@@ -1,0 +1,27 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "module": "es2015",
+    "baseUrl": "./",
+    "types": [],
+    "paths": {
+      "@angular/*": [
+        "./node_modules/@angular/*"
+      ],
+      "@nebular/*": [
+        "./node_modules/@nebular/*"
+      ]
+    }
+  },
+  "exclude": [
+    "./src/main/webapp/app/test.ts",
+    "**/*.spec.ts",
+    "./node_modules/@nebular/**/*.spec.ts"
+  ],
+  "include": [
+    "./src/main/webapp/app/*.ts",
+    "./src/main/webapp/app/**/*.ts",
+    "./node_modules/@nebular/**/*.ts"
+  ]
+}

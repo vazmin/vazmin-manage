@@ -145,9 +145,7 @@
     margin: 0 .75rem .75rem 0;
   }
 
-  .select-all-cb {
-    padding: 0.375rem 0;
-  }
+
   ng2-smart-table .ng2-smart-actions {
     width: 30px;
   }
@@ -182,17 +180,39 @@
       width: calc(1.25rem * .5);
       border-width: 0 0 2px 0;
       transform: rotate(0);
+      left: -1.25rem;
+      top: 0;
     }
   }
-  .checked-gt0 input.custom-control-input[type='checkbox'] ~ .custom-control-label::after{
+  input.custom-control-input[type='checkbox'], input.custom-control-input[type='checkbox']:checked {
+    ~ .custom-control-label{
+      &:after {
+        top: 0.1rem;
+        left: -1.1rem;
+      }
+    }
+  }
+  .checked-gt0 input.custom-control-input[type='checkbox'] ~ .custom-control-label:after{
     height: calc(1.25rem * .45);
     width: calc(1.25rem * .5);
-    left: calc(1.25rem * 0.22);
+    left: -1.2rem;
     border-width: 0 0 2px 0;
     transform: rotate(0);
     border-bottom: 2px solid #2a2a2a;
   }
+  .select-all-cb, .select-cb {
+    padding: 0.375rem 0;
+    .custom-control-label {
+      &:after {
+        top: 0 !important;
+        left: calc(1.25rem * 0.3) !important;
+      }
+      &:before {
+        left: 0;
+      }
 
+    }
+  }
   //tree-root.privilege-tree .angular-tree-component .tree-node-level-2{
   //  float: left;
   //}

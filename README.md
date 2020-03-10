@@ -2,9 +2,9 @@
 
 管理平台支持、通用模块。用户角色管理、日志记录、权限控制等。
 
-![security manage screenshot]("https://raw.githubusercontent.com/vazmin/vazmin-manage/master/doc/images/security.png")
+<img src="https://raw.githubusercontent.com/vazmin/vazmin-manage/master/doc/images/security.png"/>
+<img src="https://raw.githubusercontent.com/vazmin/vazmin-manage/master/doc/images/change-password.png"/>
 
-![change password screenshot]("https://raw.githubusercontent.com/vazmin/vazmin-manage/master/doc/images/change-password.png")
 ## How to use ##
 
 使用这个依赖，你必须：

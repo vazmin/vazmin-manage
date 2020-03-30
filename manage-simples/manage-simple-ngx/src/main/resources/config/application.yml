@@ -30,6 +30,8 @@ spring:
             user: root
             password: "chwing"
             URL: jdbc:mysql://localhost:3306/manage_platform?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+  profiles:
+    active: dev
 # application:
 #  tx-map: {
 #            "insert*": "PROPAGATION_REQUIRED,-Throwable",

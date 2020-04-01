@@ -12,7 +12,7 @@ import java.util.Set;
  * URP用户信息Bean
  *
  */
-@JsonIgnoreProperties({"password", "resetKey"})
+@JsonIgnoreProperties({"resetKey"})
 public class ManageUser implements Serializable {
     private static final long serialVersionUID = 721326756473686798L;
     /** 用户id */

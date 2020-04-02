@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,8 @@ public class CommandInfoService extends LongPKBaseService<CommandInfo> {
      * @throws ServiceProcessException
      */
     public void save(CommandInfo commandInfo) throws ServiceProcessException {
-        CommandInfo oldCommandInfo = getByPath(commandInfo.getPath());
+        CommandInfo oldCommandInfo = getByPathAndMethod(
+                commandInfo.getPath(), commandInfo.getMethod());
         if (oldCommandInfo != null) {
             commandInfo.setId(oldCommandInfo.getId());
             update(commandInfo);
@@ -59,6 +61,13 @@ public class CommandInfoService extends LongPKBaseService<CommandInfo> {
         return commandInfoMapper.getByPath(path);
     }
 
+    public CommandInfo getByPathAndMethod(String path, String method) {
+        Map<String, Object> conditions = new HashMap<>();
+        conditions.put("path", path);
+        conditions.put("method", method);
+        return getByDynamicWhere(conditions);
+    }
+
     /**
      * 更新命令的discard状态
      * @param commandInfo CommandInfo 命令对象
@@ -72,11 +81,12 @@ public class CommandInfoService extends LongPKBaseService<CommandInfo> {
      * 获取菜单集合，pkgName为 key，菜单对象为 value
      * @return Map<String, CommandInfo>
      */
-    public Map<String, CommandInfo> getCommandMap() {
-        Map<String, CommandInfo> commandMap = new HashMap<>();
+    public Map<CommandInfo.Key, CommandInfo> getCommandMap() {
+        Map<CommandInfo.Key, CommandInfo> commandMap = new HashMap<>();
         List<CommandInfo> commandInfoList = getList();
         for (CommandInfo commandInfo: commandInfoList) {
-            commandMap.put(commandInfo.getPath(), commandInfo);
+            commandInfo.setRequestMethod(RequestMethod.valueOf(commandInfo.getMethod()));
+            commandMap.put(commandInfo.buildKey(), commandInfo);
         }
         return commandMap;
     }

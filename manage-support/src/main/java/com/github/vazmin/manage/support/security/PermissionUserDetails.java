@@ -3,6 +3,7 @@ package com.github.vazmin.manage.support.security;
 import com.github.vazmin.framework.web.support.model.CommandInfo;
 import com.github.vazmin.framework.web.support.model.MenuInfo;
 import com.github.vazmin.framework.web.support.model.ModuleInfo;
+import org.springframework.http.HttpMethod;
 
 import java.util.Set;
 
@@ -13,8 +14,7 @@ import java.util.Set;
 public abstract class PermissionUserDetails implements PermissionUserDetailsInterface {
 
     /** 模块权限key集合 */
-    protected Set<String> privilegeKeySet;
-
+    protected abstract Set<String> getPrivilegeKeySet();
 
     protected abstract boolean isAdmin();
 
@@ -27,7 +27,7 @@ public abstract class PermissionUserDetails implements PermissionUserDetailsInte
     @Override
     public boolean hasPermission(CommandInfo commandInfo) {
         return isAdmin() || (commandInfo == null || commandInfo.isAllowAccessAuthenticated()
-                || privilegeKeySet.contains(commandInfo.getCommandKey()));
+                || getPrivilegeKeySet().contains(commandInfo.getCommandKey()));
     }
 
     /**
@@ -39,7 +39,7 @@ public abstract class PermissionUserDetails implements PermissionUserDetailsInte
     @Override
     public boolean hasPermission(ModuleInfo moduleInfo) {
         return isAdmin() || (moduleInfo != null
-                && (privilegeKeySet.contains(moduleInfo.getModuleKey())
+                && (getPrivilegeKeySet().contains(moduleInfo.getModuleKey())
                 || moduleInfo.isAllowAccessAuthenticated()));
     }
 
@@ -52,7 +52,7 @@ public abstract class PermissionUserDetails implements PermissionUserDetailsInte
     @Override
     public boolean hasPermission(MenuInfo menuInfo) {
         return isAdmin() || (menuInfo != null
-                && (privilegeKeySet.contains(menuInfo.getMenuKey())
+                && (getPrivilegeKeySet().contains(menuInfo.getMenuKey())
                 || menuInfo.isAllowAccessAuthenticated()));
     }
 }

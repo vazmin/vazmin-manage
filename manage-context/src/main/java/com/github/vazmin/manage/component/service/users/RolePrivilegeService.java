@@ -6,15 +6,19 @@ import com.github.vazmin.framework.core.util.tools.IntegerTools;
 import com.github.vazmin.framework.core.util.tools.LongTools;
 import com.github.vazmin.framework.web.support.model.ModuleTree;
 import com.github.vazmin.manage.component.dao.users.RolePrivilegeMapper;
+import com.github.vazmin.manage.component.model.Constants;
 import com.github.vazmin.manage.component.model.users.RolePrivilege;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 平台角色业务处理类
@@ -29,6 +33,9 @@ public class RolePrivilegeService extends AbstractPrivilegeService<RolePrivilege
 
     @Autowired
     private ModuleTree moduleTree;
+
+    @Autowired
+    private UserCacheService userCacheService;
 
     /**
      * 获取数据层mapper接口对象，子类必须实现该方法
@@ -103,6 +110,7 @@ public class RolePrivilegeService extends AbstractPrivilegeService<RolePrivilege
                 res += insert(rolePrivilege);
             }
         }
+        userCacheService.updateRolePrivilegeCache(roleId, privileges);
         for (RolePrivilege delOne: oldPrivilegeMap.values()) {
             delete(delOne.getId());
         }
@@ -117,5 +125,34 @@ public class RolePrivilegeService extends AbstractPrivilegeService<RolePrivilege
     @Override
     Long getUserOrRoleId(RolePrivilege rolePrivilege) {
         return rolePrivilege.getRoleId();
+    }
+
+    /**
+     * 根据角色id列表获得权限key列表
+     * @param roleIdList 角色id列表
+     * @return 权限key列表
+     */
+    public Set<String> getPrivilege(List<Long> roleIdList) {
+//        List<RolePrivilege> rolePrivilegeList = getListByRoleId(roleIdList);
+//        return rolePrivilegeList.stream()
+//                .map(RolePrivilege::getPrivilegeKey)
+//                .collect(Collectors.toSet());
+        return roleIdList.stream()
+                .flatMap(roleId -> getPrivilegeSetByRoleId(roleId).stream())
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * 获取角色权限集合
+     * 若缓存可用，将角色权限映射存入缓存
+     * @param roleId 角色id
+     * @return 权限集合
+     */
+    @Cacheable(cacheNames = Constants.CacheKey.ROLE_PRIVILEGE, key = "#roleId")
+    public Set<String> getPrivilegeSetByRoleId(Long roleId) {
+        List<RolePrivilege> rolePrivilegeList = getPrivilegeList(roleId);
+        return rolePrivilegeList.stream()
+                .map(RolePrivilege::getPrivilegeKey)
+                .collect(Collectors.toSet());
     }
 }

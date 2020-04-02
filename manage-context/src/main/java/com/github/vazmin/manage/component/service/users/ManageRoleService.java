@@ -7,11 +7,13 @@ import com.github.vazmin.framework.core.service.Pagination;
 import com.github.vazmin.framework.core.service.ServiceProcessException;
 import com.github.vazmin.manage.component.dao.users.ManageRoleMapper;
 import com.github.vazmin.manage.component.enu.system.TaskEnum;
+import com.github.vazmin.manage.component.model.Constants;
 import com.github.vazmin.manage.component.model.users.ManageRole;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -58,6 +60,8 @@ public class ManageRoleService extends LongPKBaseService<ManageRole> {
      * @param userId Long 用户id
      * @return List<ManageRole> 用户设置的角色列表
      */
+    // TODO: add cache put
+    @Cacheable(cacheNames = Constants.CacheKey.USER_ROLE, key = "#userId")
     public List<ManageRole> getListByUserId(Long userId) {
         return manageRoleMapper.getListByUserId(userId);
     }

@@ -43,7 +43,7 @@ spring:
 
 manage:
   client-app:
-    name: "manage-simple"
+    name: "manage-ngx-simple"
   security:
     authentication:
       admin:

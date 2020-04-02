@@ -6,7 +6,7 @@
 
     <sql id="columns_no_id">
         parent_id, code, value, order_number, pkg_name, 
-        path, enable, inlet, discard, allow_access_authenticated
+        path, method, enable, inlet, discard, allow_access_authenticated
     </sql>
 
     <sql id="columns">
@@ -15,7 +15,7 @@
 
     <sql id="columns_join">
         a.id, a.parent_id, a.code, a.value, a.order_number, 
-        a.pkg_name, a.path, a.enable, a.inlet, a.discard, a.allow_access_authenticated
+        a.pkg_name, a.path, a.method, a.enable, a.inlet, a.discard, a.allow_access_authenticated
         
     </sql>
 
@@ -30,6 +30,7 @@
             <if test="orderNumber not in {null, ''}">AND a.order_number = #{orderNumber}</if>
             <if test="pkgName not in {null, ''}">AND a.pkg_name = #{pkgName}</if>
             <if test="path !=null">AND a.path = #{path}</if>
+            <if test="method !=null">AND a.method = #{method}</if>
             <if test="enable not in {null, ''}">AND a.enable = #{enable}</if>
             <if test="inlet not in {null, ''}">AND a.inlet = #{inlet}</if>
             <if test="discard not in {null, ''}">AND a.discard = #{discard}</if>
@@ -78,7 +79,7 @@
         VALUES
         (
         #{parentId}, #{code}, #{value}, #{orderNumber}, #{pkgName}, 
-        #{path}, #{enable}, #{inlet}, #{discard}, #{allowAccessAuthenticated}
+        #{path}, #{method}, #{enable}, #{inlet}, #{discard}, #{allowAccessAuthenticated}
         )
     </insert>
 
@@ -91,6 +92,7 @@
             <if test="orderNumber != null">order_number=#{orderNumber}, </if>
             <if test="pkgName not in {null, ''}">pkg_name=#{pkgName}, </if>
             <if test="path not in {null, ''}">path=#{path}, </if>
+            <if test="method not in {null, ''}">method=#{method}, </if>
             <if test="enable != null">enable=#{enable}, </if>
             <if test="inlet != null">inlet=#{inlet}, </if>
             <if test="discard != null">discard=#{discard},</if>

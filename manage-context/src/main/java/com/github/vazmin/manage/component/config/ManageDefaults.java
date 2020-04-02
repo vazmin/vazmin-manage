@@ -77,6 +77,13 @@ public class ManageDefaults {
             int expiration = 300; // 5 minutes
             boolean useBinaryProtocol = true;
         }
+
+        interface Redis {
+
+            String[] server = {"redis://localhost:6379"};
+            int expiration = 300; // 5 minutes
+            boolean cluster = false;
+        }
     }
 
     interface Mail {

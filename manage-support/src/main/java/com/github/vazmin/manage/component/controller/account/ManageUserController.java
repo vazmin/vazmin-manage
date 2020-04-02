@@ -20,6 +20,7 @@ import com.github.vazmin.manage.support.security.ManageUserDetails;
 import com.github.vazmin.manage.support.util.HeaderUtil;
 import com.github.vazmin.manage.support.util.PaginationUtil;
 import com.github.vazmin.manage.support.util.ResponseUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -54,6 +56,9 @@ public class ManageUserController implements ManageControllerInterface, ManageAu
 
     @Autowired
     private UserPrivilegeService userPrivilegeService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     /**
@@ -85,7 +90,9 @@ public class ManageUserController implements ManageControllerInterface, ManageAu
     public ResponseEntity<Integer> update(@RequestBody ManageUser manageUser)
              throws ServiceProcessException {
         log.debug("REST request to update User : {}", GsonUtils.toJson(manageUser));
-
+        if (StringUtils.isNotBlank(manageUser.getPassword())) {
+            manageUser.setPassword(passwordEncoder.encode(manageUser.getPassword()));
+        }
         int res = manageUserService.save(manageUser);
 
         return ResponseUtil.wrapOrNotFound(res,
@@ -159,9 +166,14 @@ public class ManageUserController implements ManageControllerInterface, ManageAu
         if (manageUserDetails.getManageUser().isAdmin()) {
             throw new ServiceProcessException("Admin can't change password!");
         }
-        manageUserService.changePassword(
-                manageUserDetails.getManageUser().getId(),
-                keyAndPassword.getKey(), keyAndPassword.getNewPassword());
+        ManageUser user = manageUserService.get(manageUserDetails.getManageUser().getId());
+        if (user == null) {
+            throw new ServiceProcessException("NOT FOUND USER!");
+        }
+        if (!passwordEncoder.matches(keyAndPassword.getKey(), user.getPassword())) {
+            throw new ServiceProcessException("The old password no match!");
+        }
+        manageUserService.changePassword(user, keyAndPassword.getNewPassword());
     }
 
     /**

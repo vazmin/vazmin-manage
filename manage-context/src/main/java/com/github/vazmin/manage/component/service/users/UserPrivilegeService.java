@@ -5,15 +5,19 @@ import com.github.vazmin.framework.core.service.ServiceProcessException;
 import com.github.vazmin.framework.core.util.tools.IntegerTools;
 import com.github.vazmin.framework.core.util.tools.LongTools;
 import com.github.vazmin.manage.component.dao.users.UserPrivilegeMapper;
+import com.github.vazmin.manage.component.model.Constants;
 import com.github.vazmin.manage.component.model.users.UserPrivilege;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 平台用户却权限业务处理类
@@ -26,6 +30,8 @@ public class UserPrivilegeService extends AbstractPrivilegeService<UserPrivilege
     @Autowired
     private UserPrivilegeMapper userPrivilegeMapper;
 
+    @Autowired
+    private UserCacheService userCacheService;
     /**
      * 获取数据层mapper接口对象，子类必须实现该方法
      *
@@ -90,6 +96,7 @@ public class UserPrivilegeService extends AbstractPrivilegeService<UserPrivilege
                 res += insert(userPrivilege);
             }
         }
+        userCacheService.updateUserPrivilegeCache(userId, privileges);
         for (UserPrivilege delOne: oldPrivilegeMap.values()) {
             delete(delOne.getId());
         }
@@ -104,5 +111,19 @@ public class UserPrivilegeService extends AbstractPrivilegeService<UserPrivilege
     @Override
     Long getUserOrRoleId(UserPrivilege userPrivilege) {
         return userPrivilege.getUserId();
+    }
+
+    /**
+     * 获取用户自己的权限集合
+     * 若缓存可用，将用户权限映射存入缓存
+     * @param id 用户id
+     * @return 权限key
+     */
+    @Cacheable(cacheNames = Constants.CacheKey.USER_PRIVILEGE, key = "#id")
+    public Set<String> getUserPrivilegeSet(Long id) {
+        List<UserPrivilege> userPrivilegeList = getPrivilegeList(id);
+        return userPrivilegeList.stream()
+                .map(UserPrivilege::getPrivilegeKey)
+                .collect(Collectors.toSet());
     }
 }

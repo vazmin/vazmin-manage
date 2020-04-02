@@ -1,5 +1,6 @@
 package com.github.vazmin.manage.component.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.vazmin.framework.core.service.ServiceProcessException;
 import com.github.vazmin.framework.web.support.annotation.Command;
 import com.github.vazmin.framework.web.support.annotation.Module;
@@ -10,19 +11,23 @@ import com.github.vazmin.manage.component.controller.errors.EmailNotFoundExcepti
 import com.github.vazmin.manage.component.controller.errors.InternalServerErrorException;
 import com.github.vazmin.manage.component.service.AuthService;
 import com.github.vazmin.manage.component.vm.KeyAndPasswordVM;
+import com.github.vazmin.manage.component.vm.LoginVM;
 import com.github.vazmin.manage.component.vm.PrincipalVM;
 import com.github.vazmin.manage.support.security.ManageUserDetails;
+import com.github.vazmin.manage.support.security.jwt.TokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -46,6 +51,30 @@ public class AuthController {
 
     @Autowired
     private ManageUserService manageUserService;
+
+    @Autowired
+    private TokenProvider tokenProvider;
+
+    @Autowired
+    private AuthenticationManagerBuilder authenticationManagerBuilder;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @PostMapping("/authenticate")
+    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
+
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
+        String jwt = tokenProvider.createToken(authentication, rememberMe);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(HttpHeaders.AUTHORIZATION, "Bearer " + jwt);
+        return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+    }
 
     /**
      * GET  /authenticate : check if the user is authenticated, and return its login.
@@ -118,9 +147,31 @@ public class AuthController {
     @ResponseBody
     @RequestMapping(value = "/account/reset-password/finish", method = RequestMethod.POST)
     public void resetPasswordFinish(@Valid @RequestBody KeyAndPasswordVM keyAndPassword) throws ServiceProcessException {
-        ManageUser user = manageUserService.completePasswordReset(keyAndPassword.getKey(), keyAndPassword.getNewPassword());
+        ManageUser user = manageUserService.completePasswordReset(
+                keyAndPassword.getKey(), passwordEncoder.encode(keyAndPassword.getNewPassword()));
         if (user == null) {
             throw new InternalServerErrorException("No user was found for this reset key");
+        }
+    }
+
+    /**
+     * Object to return as body in JWT Authentication.
+     */
+    static class JWTToken {
+
+        private String idToken;
+
+        JWTToken(String idToken) {
+            this.idToken = idToken;
+        }
+
+        @JsonProperty("id_token")
+        String getIdToken() {
+            return idToken;
+        }
+
+        void setIdToken(String idToken) {
+            this.idToken = idToken;
         }
     }
 }

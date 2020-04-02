@@ -81,12 +81,13 @@ CREATE TABLE IF NOT EXISTS command_info (
   order_number    INT NOT NULL COMMENT '同级显示顺序',
   pkg_name        VARCHAR(255) NOT NULL COMMENT '包名和方法名',
   path            VARCHAR(255) NOT NULL COMMENT '访问路径',
+  method          VARCHAR(128) NOT NULL COMMENT '请求方法; GET, POST...',
   enable          TINYINT NOT NULL COMMENT '是否启用，true－启用，false－停用，默认为启用',
   inlet           TINYINT NOT NULL COMMENT '是否是模块入口',
   discard         TINYINT NOT NULL COMMENT '是否舍弃，true－舍弃，false－未舍弃，如果舍弃，可在管理后台删除',
   allow_access_authenticated TINYINT NOT NULL COMMENT '允许通过身份验证的用户访问， 默认不允许',
   PRIMARY KEY(id),
-  UNIQUE(path),
+  UNIQUE(path, method),
   INDEX(parent_id),
   INDEX(enable)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE utf8_bin COMMENT '命令信息表';

@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>manage-simple-ngx</module>
+        <module>manage-simple-mat</module>
     </modules>
     <artifactId>manage-simples</artifactId>
 

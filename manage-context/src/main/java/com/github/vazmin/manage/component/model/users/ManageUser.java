@@ -56,6 +56,8 @@ public class ManageUser implements Serializable {
     /** 用户设置的角色列表 */
     private List<ManageRole> manageRoleList;
 
+    private Set<String> privilegeKeySet = new HashSet<>();
+
     /**
      * 判断用户是否赋予了指定角色
      * @param roleId Long 角色id
@@ -235,5 +237,13 @@ public class ManageUser implements Serializable {
 
     public void setResetDate(Long resetDate) {
         this.resetDate = resetDate;
+    }
+
+    public Set<String> getPrivilegeKeySet() {
+        return privilegeKeySet;
+    }
+
+    public void setPrivilegeKeySet(Set<String> privilegeKeySet) {
+        this.privilegeKeySet = privilegeKeySet;
     }
 }

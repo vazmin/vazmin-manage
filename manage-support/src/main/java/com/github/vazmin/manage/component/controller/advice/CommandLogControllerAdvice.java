@@ -25,6 +25,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.net.URI;
@@ -66,7 +67,8 @@ public class CommandLogControllerAdvice implements ResponseBodyAdvice<Object> {
         ManageUser manageUser = manageUserDetails.getManageUser();
 
         URI uri = request.getURI();
-        CommandInfo commandInfo = moduleTree != null ? moduleTree.getCommand(uri.getPath()) : null;
+        CommandInfo commandInfo = moduleTree != null && request.getMethod() != null ?
+                moduleTree.getCommand(uri.getPath(), RequestMethod.valueOf(request.getMethod().name())) : null;
         if (commandInfo == null) {
             log.debug("no matched commandInfo for: " + uri.getPath());
         }

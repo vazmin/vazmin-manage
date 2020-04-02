@@ -72,7 +72,7 @@ public class ManageModuleInitializeListener extends AbstractModuleInitializeList
     }
 
     @Override
-    public Map<String, CommandInfo> getOldCommandMap() {
+    public Map<CommandInfo.Key, CommandInfo> getOldCommandMap() {
         return commandInfoService.getCommandMap();
     }
 

@@ -1,5 +1,6 @@
 package com.github.vazmin.manage.support.security.handler;
 
+import com.github.vazmin.manage.component.model.users.ManageRole;
 import com.github.vazmin.manage.component.service.users.ManageRoleService;
 import com.github.vazmin.manage.component.service.users.ManageUserService;
 import com.github.vazmin.manage.support.security.ManageUserDetails;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 登录成功处理器
@@ -47,14 +49,6 @@ public class ManageAuthenticationSuccessHandler
         log.debug("登录成功，提取用户权限集合保存到用户的凭证中");
         ManageUserDetails manageUserDetails = (ManageUserDetails)authentication.getPrincipal();
         if (!manageUserDetails.isAdmin()) {
-            Set<String> privilegeSet =
-                    manageUserService.getPrivilegeSet(manageUserDetails.getManageUser().getId());
-            log.debug("privilegeSet=" + privilegeSet);
-            if (privilegeSet != null) {
-                manageUserDetails.addPrivilegeKeys(privilegeSet);
-            }
-            manageUserDetails.setManageRoleList(
-                    manageRoleService.getListByUserId(manageUserDetails.getManageUser().getId()));
             manageUserService.updateLastVisitDate(manageUserDetails.getManageUser().getId());
         }
 

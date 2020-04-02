@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -17,11 +18,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static org.springframework.web.servlet.HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE;
+
 /**
  * 命令请求授权过滤器，适用于每次request请求，根据访问的URL路径从用户权限列表进行匹配，
  * 如果匹配失败，抛出 AccessDeniedException 异常，由 AccessDeniedHandler 处理。
  *
+ * @deprecated filter 在 getHandler之前，如果要支持restful风格的请求
+ * 需要自己遍历所有command来match url.
+ * 替代品 {@link com.github.vazmin.manage.support.security.interceptor.CommandAccessDecisionInterceptor}
  */
+@Deprecated
 public class CommandAccessDecisionFilter extends OncePerRequestFilter {
     private static final Logger log = LoggerFactory.getLogger(CommandAccessDecisionFilter.class);
 
@@ -37,9 +44,11 @@ public class CommandAccessDecisionFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             ManageUserDetails manageUserDetails = (ManageUserDetails)authentication.getPrincipal();
-            String requestPath = getRequestPathNoSuffix(request);
-            log.debug("check permission requestPath=" + requestPath);
-            if (!manageUserDetails.hasPermission(moduleTree.getCommand(requestPath))) {
+            String requestPath = (String) request.getAttribute(BEST_MATCHING_PATTERN_ATTRIBUTE);
+            RequestMethod requestMethod = RequestMethod.valueOf(request.getMethod());
+            log.debug("check permission bast matching pattern = {}, method = {}",
+                    requestPath, requestMethod);
+            if (!manageUserDetails.hasPermission(moduleTree.getCommand(requestPath, requestMethod))) {
                 throw new AccessDeniedException("Has no permission.");
             } else {
                 ManageUser manageUser = manageUserDetails.getManageUser();

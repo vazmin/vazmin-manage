@@ -27,9 +27,9 @@
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <spring.boot.version>2.1.6.RELEASE</spring.boot.version>
         <spring-security.version>5.1.5.RELEASE</spring-security.version>
-
+        <spring-boot-maven-plugin.version>2.2.6.RELEASE</spring-boot-maven-plugin.version>
         <revision>0.0.3-SNAPSHOT</revision>
-        <vazmin.core.version>0.0.2-SNAPSHOT</vazmin.core.version>
+        <vazmin.core.version>0.0.3-SNAPSHOT</vazmin.core.version>
         <vazmin.web.version>${vazmin.core.version}</vazmin.web.version>
 
         <mysql-jdbc.version>8.0.16</mysql-jdbc.version>
@@ -39,6 +39,7 @@
         <jjwt.version>0.10.6</jjwt.version>
         <problem-spring.version>0.24.0</problem-spring.version>
         <problem-spring-web.version>${problem-spring.version}</problem-spring-web.version>
+        <io.protostuff.version>1.7.0</io.protostuff.version>
 
         <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
         <node.version>v12.13.0</node.version>
@@ -83,11 +84,7 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>3.4.6</version>
-        </dependency>
+
 
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -216,6 +213,23 @@
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>${io.protostuff.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-runtime</artifactId>
+            <version>${io.protostuff.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -249,6 +263,31 @@
                 <configuration>
                     <skipTests>true</skipTests>
                 </configuration>
+            </plugin>
+            <!-- pom 优化 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

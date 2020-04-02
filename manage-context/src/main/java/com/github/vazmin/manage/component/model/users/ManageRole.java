@@ -3,6 +3,7 @@ package com.github.vazmin.manage.component.model.users;
 
 import com.github.vazmin.framework.core.enu.BoolEnum;
 import com.github.vazmin.framework.core.enu.StatusEnum;
+import com.github.vazmin.manage.component.model.Constants;
 
 import java.io.Serializable;
 
@@ -83,5 +84,9 @@ public class ManageRole implements Serializable {
 
     public void setUserCount(Integer userCount) {
         this.userCount = userCount;
+    }
+
+    public String roleKey() {
+        return String.format("%s-%s-%s", Constants.Prefix.ROLE, id, getManager());
     }
 }

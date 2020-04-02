@@ -10,17 +10,16 @@ import com.github.vazmin.framework.core.util.tools.LongTools;
 import com.github.vazmin.manage.component.dao.users.ManageUserMapper;
 import com.github.vazmin.manage.component.enu.system.ItemTypeEnum;
 import com.github.vazmin.manage.component.enu.system.TaskEnum;
-import com.github.vazmin.manage.component.model.users.ManageUser;
-import com.github.vazmin.manage.component.model.users.RolePrivilege;
-import com.github.vazmin.manage.component.model.users.UserPrivilege;
-import com.github.vazmin.manage.component.model.users.UserRole;
+import com.github.vazmin.manage.component.model.Constants;
+import com.github.vazmin.manage.component.model.users.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -47,7 +46,11 @@ public class ManageUserService extends LongPKBaseService<ManageUser> {
     private RolePrivilegeService rolePrivilegeService;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private ManageRoleService manageRoleService;
+
+    @Autowired
+    private UserCacheService userCacheService;
+
 
     /* 重置密码key有效期 一天*/
     public final long RESET_KEY_VALIDITY_PERIOD = 86400L;
@@ -108,6 +111,26 @@ public class ManageUserService extends LongPKBaseService<ManageUser> {
     }
 
     /**
+     * 根据用户名获取用户信息, 携带权限凭证
+     * @param username String 用户登录名
+     * @return ManageUser 用户对象
+     */
+    public ManageUser getByUsernameTakePrincipal(String username) {
+        ManageUser manageUser = userCacheService.getByUsername(username);
+        if (manageUser == null) {
+            return null;
+        }
+        manageUser.setManageRoleList(manageRoleService.getListByUserId(manageUser.getId()));
+        List<Long> roleIdList = manageUser.getManageRoleList()
+                .stream()
+                .map(ManageRole::getId)
+                .collect(Collectors.toList());
+        Set<String> privilegeSet = getPrivilegeSet(manageUser.getId(), roleIdList);
+        manageUser.getPrivilegeKeySet().addAll(privilegeSet);
+        return manageUser;
+    }
+
+    /**
      * 根据用户邮箱获取用户信息
      * @param email String 用户邮箱
      * @return ManageUser 用户对象
@@ -156,27 +179,16 @@ public class ManageUserService extends LongPKBaseService<ManageUser> {
         if (user == null || DateUtil.getTimestamp() - user.getResetDate() > RESET_KEY_VALIDITY_PERIOD) {
             return null;
         }
-        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setPassword(newPassword);
         user.setResetKey(null);
         user.setResetDate(null);
         update(user);
         return user;
     }
 
-    public ManageUser changePassword(Long id, String oldPassWord, String newPassword) throws ServiceProcessException {
-        ManageUser user = get(id);
-        if (user == null) {
-            throw new ServiceProcessException("NOT FOUND USER!");
-        }
-        return changePassword(user, oldPassWord, newPassword);
-    }
 
-    public ManageUser changePassword(ManageUser user , String oldPassWord, String newPassword) throws ServiceProcessException {
-
-        if (!passwordEncoder.matches(oldPassWord, user.getPassword())) {
-            throw new ServiceProcessException("The old password no match!");
-        }
-        user.setPassword(passwordEncoder.encode(newPassword));
+    public ManageUser changePassword(ManageUser user , String newPassword) throws ServiceProcessException {
+        user.setPassword(newPassword);
         update(user);
         return user;
     }
@@ -197,24 +209,24 @@ public class ManageUserService extends LongPKBaseService<ManageUser> {
      * @param id Long 用户id
      * @return Set<String> 权限 key 集合
      */
-    public Set<String> getPrivilegeSet(Long id) {
+
+    public Set<String> getPrivilegeSet(Long id, List<Long> roleIdList) {
         if (id == null) {
             return null;
         }
-        Set<String> privilegeSet = new HashSet<>();
-        List<UserPrivilege> userPrivilegeList =
-                userPrivilegeService.getPrivilegeList(id);
-        privilegeSet.addAll(userPrivilegeList.stream().map(UserPrivilege::getPrivilegeKey).collect(Collectors.toList()));
-
-        List<UserRole> userRoleList = userRoleService.getListByUserId(id);
-        if (userRoleList.size() > 0) {
-            List<Long> roleIdList = userRoleList.stream().map(UserRole::getRoleId).collect(Collectors.toList());
-            List<RolePrivilege> rolePrivilegeList =
-                    rolePrivilegeService.getListByRoleId(roleIdList);
-            privilegeSet.addAll(rolePrivilegeList.stream().map(RolePrivilege::getPrivilegeKey).collect(Collectors.toList()));
+        Set<String> privilegeSet = userPrivilegeService.getUserPrivilegeSet(id);
+        if (roleIdList.isEmpty()) {
+           return privilegeSet;
         }
+        // add role's privilege
+        Set<String> rolePrivilegeSet = roleIdList.stream()
+                .flatMap(roleId -> rolePrivilegeService.getPrivilegeSetByRoleId(roleId).stream())
+                .collect(Collectors.toSet());
+        privilegeSet.addAll(rolePrivilegeSet);
         return privilegeSet;
     }
+
+
 
     /**
      * 保存用户信息
@@ -222,10 +234,8 @@ public class ManageUserService extends LongPKBaseService<ManageUser> {
      * @return int 结果记录数
      * @throws ServiceProcessException
      */
+    @CachePut(cacheNames = Constants.CacheKey.MANAGE_USER, key = "#manageUser.id")
     public int save(ManageUser manageUser) throws ServiceProcessException {
-        if (StringUtils.isNotBlank(manageUser.getPassword())) {
-            manageUser.setPassword(passwordEncoder.encode(manageUser.getPassword()));
-        }
         int res;
         if (LongTools.lessEqualZero(manageUser.getId())) {
             ManageUser oldOne = getByUsername(manageUser.getUsername());

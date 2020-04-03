@@ -14,6 +14,7 @@
         <module>manage-support</module>
         <module>manage-simples</module>
         <module>manage-ui-ngx</module>
+        <module>manage-ui-mat</module>
     </modules>
 
     <properties>

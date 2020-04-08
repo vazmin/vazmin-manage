@@ -1,2 +1,13 @@
+<app-top-menu class="mat-elevation-z6" (menuToggle)="snav.toggle()"></app-top-menu>
 
-<router-outlet></router-outlet>
+<mat-sidenav-container class="example-sidenav-container">
+  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+               [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" opened="true" >
+    <app-nav-menu></app-nav-menu>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <app-main></app-main>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

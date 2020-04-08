@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
-import { JhbarSharedLibsModule } from './shared-libs.module';
+import { MatSharedLibsModule } from './shared-libs.module';
+import {HasAnyPermissionDirective} from 'app/core/auth/has-any-permission.directive';
 
 
 @NgModule({
-  imports: [JhbarSharedLibsModule],
-  declarations: [HasAnyAuthorityDirective],
+  imports: [MatSharedLibsModule],
+  declarations: [HasAnyPermissionDirective],
   entryComponents: [],
   exports: [
-    JhbarSharedLibsModule,
-    HasAnyAuthorityDirective
+    MatSharedLibsModule,
+    HasAnyPermissionDirective
   ]
 })
 export class MatSharedModule {}

@@ -1,0 +1,15 @@
+@mixin top-menu-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  app-top-menu {
+    color: mat-color($primary, default-contrast);
+
+    .docs-navbar, .docs-navbar-header {
+      background: mat-color($primary);
+    }
+  }
+}

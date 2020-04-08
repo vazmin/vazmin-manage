@@ -1,5 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
-/* You can add global styles to this file, and also import other style files */
+@import './app-theme';
+//@import './styles/api';
+//@import './styles/markdown';
+//@import './styles/tables';
+@import '../../styles/general';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// Include material core styles.
+@include mat-core();
+
+@include angular-material-theme($theme);
+@include material-docs-app-theme($theme);
+
+

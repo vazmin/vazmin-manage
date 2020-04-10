@@ -1,6 +1,6 @@
 const path = require('path');
 
-const tsconfig = require('../tsconfig.json');
+const tsconfig = require('./tsconfig.json');
 
 module.exports = {
   root,

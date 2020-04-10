@@ -1,0 +1,70 @@
+@import '~@angular/material/theming';
+// Mixin to apply theme colors for generated API docs.
+@mixin app-sidenav-theme($theme) {
+
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+  $is-dark-theme: map-get($theme, is-dark);
+  $nav-background-opacity: if($is-dark-theme, 0.2, 0.03);
+  $nav-background-focus-opacity: if($is-dark-theme, 0.25, 0.08);
+
+
+  mat-sidenav-container.sidenav-container.mat-drawer-container.mat-sidenav-container,
+  mat-sidenav-container .sidenav-content {
+    background: none;
+  }
+  .vertical-menu-item-warp {
+    color: rgba(mat-color($foreground, text), 0.7);
+
+    &:focus {
+      background: rgba(0, 0, 0, $nav-background-focus-opacity);
+    }
+    button.vertical-menu-item {
+      color: rgba(mat-color($foreground, text), 0.7);
+
+      &:focus {
+        // override the default background
+        background: rgba(0, 0, 0, $nav-background-focus-opacity);
+      }
+    }
+    .vertical-menu-item {
+
+      color: mat-color($foreground, secondary-text);
+
+      &.selected,
+      &:hover {
+        color: mat-color($primary, if($is-dark-theme, 200, default));
+        background: rgba(0, 0, 0, $nav-background-focus-opacity);
+      }
+
+      &.selected {
+        background: rgba(0, 0, 0, $nav-background-focus-opacity);
+      }
+    }
+  }
+
+
+  .heading {
+    color: rgba(0, 0, 0, $nav-background-focus-opacity);
+  }
+
+
+  aio-nav-menu.top-menu {
+    padding: 24px 0 0;
+
+    aio-nav-item:last-child div {
+      border-bottom: 1px solid rgba(mat-color($foreground, text), 0.5);
+    }
+
+    aio-nav-item:first-child div {
+      border-top: 1px solid rgba(mat-color($foreground, text), 0.5);
+    }
+  }
+
+
+}
+
+

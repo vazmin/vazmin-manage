@@ -1,13 +1,16 @@
-<app-top-menu class="mat-elevation-z6" (menuToggle)="snav.toggle()"></app-top-menu>
+<app-top-menu class="mat-elevation-z6" (menuToggle)="sidenav.toggle()"></app-top-menu>
 
-<mat-sidenav-container class="example-sidenav-container">
-  <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
-               [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" opened="true" >
-    <app-nav-menu></app-nav-menu>
+<mat-sidenav-container class="sidenav-container" [class.starting]="isStarting">
+
+  <mat-sidenav [ngClass]="{'collapsed': !isSideBySide}" #sidenav class="sidenav" [mode]="mode" [opened]="isOpened" (openedChange)="updateHostClasses()">
+    <aio-nav-menu *ngIf="!isSideBySide" [nodes]="topMenuNarrowNodes" [currentNode]="currentNodes?.TopBarNarrow" [isWide]="false"></aio-nav-menu>
+    <aio-nav-menu [nodes]="sideNavNodes" [currentNode]="currentNodes?.SideNav" [isWide]="isSideBySide"></aio-nav-menu>
+
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <main class="sidenav-content">
     <app-main></app-main>
     <app-footer></app-footer>
-  </mat-sidenav-content>
+  </main>
+
 </mat-sidenav-container>

@@ -1,1 +1,48 @@
-aaaaa
+<!--<mat-nav-list class="menu-items">-->
+<!--  <mat-list-item class="menu-item" *ngFor="let menu of menus">-->
+<!--    <mat-icon mat-list-icon>{{menu.icon}}</mat-icon>-->
+<!--    <a matLine href="{{menu.url}}">{{menu.title}}</a>-->
+<!--  </mat-list-item>-->
+<!--</mat-nav-list>-->
+
+<!--<div class="docs-component-viewer-nav">-->
+<!--  <div class="docs-component-viewer-nav-content">-->
+<!--    <div *ngFor="let menu of menus; let last = last;">-->
+
+<!--      <mat-nav-list [attr.aria-label]="menu.title" *ngIf="!menu.children">-->
+<!--        <mat-list-item>-->
+<!--          <mat-icon mat-list-icon>{{menu.icon}}</mat-icon>-->
+<!--          <a [routerLink]=""-->
+<!--             routerLinkActive="docs-component-viewer-sidenav-item-selected"-->
+<!--             [attr.aria-current]="currentItemId === menu.id ? 'page': 'false'">-->
+<!--            {{menu.title}}-->
+<!--          </a>-->
+<!--        </mat-list-item>-->
+
+<!--      </mat-nav-list>-->
+<!--      <div *ngIf="menu.children">-->
+<!--        <button cdkAccordionItem #panel="cdkAccordionItem" (click)="panel.toggle()" expanded="true"-->
+<!--                class="docs-nav-content-btn"-->
+<!--                [attr.aria-controls]="'panel-' + menu.id"-->
+<!--                [attr.aria-expanded]="panel.expanded">-->
+
+<!--          {{menu.title}}-->
+<!--          <mat-icon>{{panel.expanded ? 'keyboard_arrow_up' :  'keyboard_arrow_down'}}</mat-icon>-->
+<!--        </button>-->
+<!--        <mat-nav-list dense [@bodyExpansion]="panel.expanded ? 'expanded' : 'collapsed'"-->
+<!--                      id="panel-{{menu.id}}" [attr.aria-label]="menu.title">-->
+<!--          <mat-list-item  *ngFor="let children of menu.children">-->
+<!--            <mat-icon mat-list-icon>{{menu.icon}}</mat-icon>-->
+<!--            <a [routerLink]=""-->
+<!--               routerLinkActive="docs-component-viewer-sidenav-item-selected"-->
+<!--               [attr.aria-current]="currentItemId === children.id ? 'page': 'false'">-->
+<!--              {{children.title}}-->
+<!--            </a>-->
+<!--          </mat-list-item>-->
+<!--        </mat-nav-list>-->
+<!--      </div>-->
+
+<!--      <hr *ngIf="!last" />-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

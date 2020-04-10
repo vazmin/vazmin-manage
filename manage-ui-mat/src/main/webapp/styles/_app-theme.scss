@@ -1,10 +1,11 @@
 @import '~@angular/material/theming';
 
-@import '../../app/layout/top-menu/top-menu-theme';
-@import '../../styles/api-theme';
-@import '../../styles/markdown-theme';
-@import '../../styles/svg-theme';
-@import '../../styles/tables-theme';
+@import '../app/layout/top-menu/top-menu-theme';
+//@import './2-modules/api-theme';
+//@import './2-modules/markdown-theme';
+//@import './2-modules/svg-theme';
+//@import './2-modules/tables-theme';
+@import './1-layouts/sidenav-theme';
 
 // Styles for the docs app that are based on the current theme.
 @mixin material-docs-app-theme($theme) {
@@ -40,15 +41,16 @@
   //@include component-list-theme($theme);
   //@include component-viewer-sidenav-theme($theme);
   //@include component-viewer-theme($theme);
-  @include docs-site-api-theme($theme);
-  @include docs-site-markdown-theme($theme);
-  @include docs-site-svg-theme($theme);
-  @include docs-site-tables-theme($theme);
+  //@include docs-site-api-theme($theme);
+  //@include docs-site-markdown-theme($theme);
+  //@include docs-site-svg-theme($theme);
+  //@include docs-site-tables-theme($theme);
   //@include example-viewer-theme($theme);
   //@include footer-theme($theme);
   //@include guide-list-theme($theme);
   //@include home-page-theme($theme);
   @include top-menu-theme($theme);
+  @include app-sidenav-theme($theme);
   //@include table-of-contents-theme($theme);
 }
 

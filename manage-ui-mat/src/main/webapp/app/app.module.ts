@@ -11,11 +11,19 @@ import { SimpleComponent } from './layout/simple/simple.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { MainComponent } from './layout/main/main.component';
 import { TopMenuComponent } from './layout/top-menu/top-menu.component';
-import { NavMenuComponent } from './layout/nav-menu/nav-menu.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {HttpClientModule} from '@angular/common/http';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {CdkAccordionModule} from '@angular/cdk/accordion';
+import {AioNavMenuComponent} from 'app/shared/components/nav-menu/nav-menu.component';
+import {NavItemComponent} from 'app/shared/components/nav-item/nav-item.component';
+import {LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {LocationService} from 'app/shared/location.service';
+import {ScrollService} from 'app/shared/scroll.service';
+import {NavigationService} from 'app/shared/components/navigation/navigation.service';
+import {ThemePickerModule} from 'app/shared/components/theme-picker';
 
 @NgModule({
   declarations: [
@@ -24,7 +32,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     FooterComponent,
     MainComponent,
     TopMenuComponent,
-    NavMenuComponent
+    AioNavMenuComponent,
+    NavItemComponent
   ],
   imports: [
     BrowserModule,
@@ -34,9 +43,17 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatListModule,
+    CdkAccordionModule,
+    ThemePickerModule
   ],
-  providers: [],
+  providers: [
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    LocationService,
+    NavigationService,
+    ScrollService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -39,6 +39,7 @@
             "polyfills": "src/main/webapp/app/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "extractCss": true,
             "assets": [
               {
                 "glob": "**/*",
@@ -54,8 +55,31 @@
             "styles": [
               {
                 "input": "src/main/webapp/styles/styles.scss"
+              },
+              {
+                "input": "src/main/webapp/styles/custom-themes/indigo-pink.scss",
+                "inject": false,
+                "lazy": true,
+                "bundleName": "assets/indigo-pink"
+              },
+              {
+                "input": "src/main/webapp/styles/custom-themes/deeppurple-amber.scss",
+                "inject": false,
+                "lazy": true,
+                "bundleName": "assets/deeppurple-amber"
+              },
+              {
+                "input": "src/main/webapp/styles/custom-themes/pink-bluegrey.scss",
+                "inject": false,
+                "lazy": true,
+                "bundleName": "assets/pink-bluegrey"
+              },
+              {
+                "input": "src/main/webapp/styles/custom-themes/purple-green.scss",
+                "inject": false,
+                "lazy": true,
+                "bundleName": "assets/purple-green"
               }
-
             ],
             "scripts": []
           },
@@ -150,7 +174,8 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "manage-ui-mat",
   "cli": {
     "packageManager": "npm"

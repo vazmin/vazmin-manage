@@ -17,7 +17,7 @@ export class AppComponent implements OnDestroy, OnInit {
   currentNodes: CurrentNodes = {};
   currentPath: string;
   // Disable all Angular animations for the initial render.
-  @HostBinding('@.disabled')
+  // @HostBinding('@.disabled')
   isStarting = true;
   isTransitioning = true;
   isFetching = false;
@@ -43,7 +43,6 @@ export class AppComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
-    // tslint:disable-next-line:deprecation
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 

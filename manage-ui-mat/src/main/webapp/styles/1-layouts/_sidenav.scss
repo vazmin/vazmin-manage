@@ -1,7 +1,8 @@
+@import '../0-base/base_dir';
 // Disable sidenav animations for the initial render.
-.starting.mat-drawer-transition .mat-drawer-content {
-  transition: none;
-}
+//.starting.mat-drawer-transition .mat-drawer-content {
+//  transition: none;
+//}
 
 aio-nav-menu {
   display: block;
@@ -31,7 +32,6 @@ mat-sidenav.mat-sidenav.sidenav {
   left: 0;
   padding: 0;
   min-width: 260px;
-  background-color: $white;
   box-shadow: 6px 0 6px rgba(0,0,0,0.10);
 
   &.collapsed {
@@ -54,17 +54,11 @@ mat-sidenav-container.sidenav-container {
   height: auto !important;
   max-width: 100%;
   margin: 0;
-  transform: none;
+  //transform: none;
 
   &.has-floating-toc {
     max-width: 82%;
   }
-
-}
-
-mat-sidenav-container.sidenav-container.mat-drawer-container.mat-sidenav-container,
-mat-sidenav-container .sidenav-content {
-  background-color: $white;
 
 }
 
@@ -85,20 +79,6 @@ mat-sidenav-container div.mat-sidenav-content {
   width: 100%;
   word-wrap: break-word;
 
-  //&:hover {
-  //  background-color: $lightgray;
-  //  color: $blue;
-  //  text-shadow: 0 0 5px #ffffff;
-  //}
-
-  //&:focus {
-  //  outline: $focus-outline-onlight auto 2px;
-  //}
-  //
-  //&.selected {
-  //  color: $blue;
-  //}
-
   &.level-2 {
     padding-top: 4px;
     padding-bottom: 4px;
@@ -107,12 +87,6 @@ mat-sidenav-container div.mat-sidenav-content {
   span {
     padding-right: 32px;
   }
-
-  //icons _within_ nav
-  //.mat-icon {
-  //  height: 24px;
-  //  width: 24px;
-  //}
 
 }
 
@@ -134,28 +108,7 @@ button.vertical-menu-item {
   .item-icon {
     margin: 0 0.5rem 0 0;
   }
-  //padding: 10px 15px;
-  //font-weight: 700;
-  //line-height: 16px;
-  //margin: 0;
-  //font-size: 13px;
-  //cursor: pointer;
-  //position: relative;
-  //display: block;
-  //width: 100%;
-  //text-align: left;
-  //background: none;
-  //border: none;
-  //
-  //&:focus {
-  //  outline: none;
-  //}
-  //
-  //.mat-icon {
-  //  position: absolute;
-  //  right: 5px;
-  //  font-size: 18px;
-  //}
+
 }
 
 a.vertical-menu-item {
@@ -238,34 +191,3 @@ a.vertical-menu-item {
   padding-left: 40px;
 }
 
-aio-nav-menu.top-menu {
-  padding: 24px 0 0;
-
-  aio-nav-item:last-child div {
-    border-bottom: 1px solid rgba($mediumgray, 0.5);
-  }
-
-  aio-nav-item:first-child div {
-    border-top: 1px solid rgba($mediumgray, 0.5);
-  }
-}
-
-//// Angular Version Selector
-//mat-sidenav .doc-version {
-//  padding: 8px;
-//  border-top: 1px solid $lightgray;
-//
-//  select {
-//    outline: none;
-//    width: 100%;
-//    background: rgba($lightgray, 0.5);
-//    height: 32px;
-//    border: 1px solid $lightgray;
-//    color: $darkgray;
-//
-//    option {
-//      font-family: $main-font;
-//      @include font-size(14);
-//    }
-//  }
-//}

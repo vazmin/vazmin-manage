@@ -14,7 +14,7 @@
 
   mat-sidenav-container.sidenav-container.mat-drawer-container.mat-sidenav-container,
   mat-sidenav-container .sidenav-content {
-    background: none;
+    background: rgba(0, 0, 0, $nav-background-opacity);
   }
   .vertical-menu-item-warp {
     color: rgba(mat-color($foreground, text), 0.7);
@@ -46,24 +46,9 @@
     }
   }
 
-
   .heading {
     color: rgba(0, 0, 0, $nav-background-focus-opacity);
   }
-
-
-  aio-nav-menu.top-menu {
-    padding: 24px 0 0;
-
-    aio-nav-item:last-child div {
-      border-bottom: 1px solid rgba(mat-color($foreground, text), 0.5);
-    }
-
-    aio-nav-item:first-child div {
-      border-top: 1px solid rgba(mat-color($foreground, text), 0.5);
-    }
-  }
-
 
 }
 

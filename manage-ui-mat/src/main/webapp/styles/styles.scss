@@ -4,6 +4,7 @@
 
 @import './0-base/base_dir';
 @import './1-layouts/layouts_dir';
+@import './2-modules/modules_dir';
 
 // Include material core styles.
 @include mat-core();

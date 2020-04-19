@@ -1,15 +1,21 @@
-import { NgModule } from '@angular/core';
-import { MatSharedLibsModule } from './shared-libs.module';
-import {HasAnyPermissionDirective} from 'app/core/auth/has-any-permission.directive';
+import {NgModule} from '@angular/core';
+import {AppSharedLibsModule} from './shared-libs.module';
+// import {HasAnyPermissionDirective} from 'app/core/auth/has-any-permission.directive';
+// import {HasAllPermissionDirective} from 'app/core/auth/has-all-permission.directive';
 
 
 @NgModule({
-  imports: [MatSharedLibsModule],
-  declarations: [HasAnyPermissionDirective],
+  imports: [AppSharedLibsModule],
+  declarations: [
+    // HasAnyPermissionDirective,
+    // HasAllPermissionDirective
+
+  ],
   entryComponents: [],
   exports: [
-    MatSharedLibsModule,
-    HasAnyPermissionDirective
+    AppSharedLibsModule,
+    // HasAnyPermissionDirective
   ]
 })
-export class MatSharedModule {}
+export class AppSharedModule {
+}

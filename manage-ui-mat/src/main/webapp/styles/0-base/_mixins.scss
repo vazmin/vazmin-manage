@@ -100,14 +100,14 @@
   }
 }
 
-@mixin nb-scrollbars() {
+@mixin small-scrollbars() {
 
   &::-webkit-scrollbar {
-    width: $scrollbar-width;
-    height: $scrollbar-width;
+    height: 4px;
+    width: 4px;
   }
-
-
-
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .26);
+  }
 
 }

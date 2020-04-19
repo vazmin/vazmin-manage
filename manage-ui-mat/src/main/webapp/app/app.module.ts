@@ -24,36 +24,33 @@ import {LocationService} from 'app/shared/location.service';
 import {ScrollService} from 'app/shared/scroll.service';
 import {NavigationService} from 'app/shared/components/navigation/navigation.service';
 import {ThemePickerModule} from 'app/shared/components/theme-picker';
+import { PagesModule } from './pages/pages.module';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SimpleComponent,
-    FooterComponent,
-    MainComponent,
-    TopMenuComponent,
-    AioNavMenuComponent,
-    NavItemComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    CdkAccordionModule,
-    ThemePickerModule
-  ],
-  providers: [
-    { provide: LocationStrategy, useClass: PathLocationStrategy },
-    LocationService,
-    NavigationService,
-    ScrollService,
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatCheckboxModule,
+        CdkAccordionModule,
+        ThemePickerModule,
+        PagesModule
+    ],
+    providers: [
+        {provide: LocationStrategy, useClass: PathLocationStrategy},
+        LocationService,
+        NavigationService,
+        ScrollService,
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

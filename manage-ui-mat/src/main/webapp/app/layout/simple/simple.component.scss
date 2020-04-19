@@ -1,0 +1,6 @@
+.main-container {
+  min-height: calc(100vh - 15.2rem);
+  @media screen and (max-width: 600px) {
+    min-height: calc(100vh - 14.2rem);
+  }
+}

@@ -31,28 +31,28 @@ h1 {
 h2 {
   @include font-size(22);
   font-weight: 500;
-  margin: 32px 0px 24px;
+  margin: 32px 0 24px;
   clear: both;
 }
 
 h3 {
   @include font-size(20);
   font-weight: 400;
-  margin: 24px 0px 12px;
+  margin: 24px 0 12px;
   clear: both;
 }
 
 h4 {
   @include font-size(18);
   font-weight: 400;
-  margin: 8px 0px;
+  margin: 8px 0;
   clear: both;
 }
 
 h5 {
   @include font-size(16);
   font-weight: 500;
-  margin: 8px 0px;
+  margin: 8px 0;
   clear: both;
 }
 
@@ -148,18 +148,18 @@ table {
   border-collapse: collapse;
   border-radius: 2px;
   border-spacing: 0;
-  margin: 12px 0 32px;
+  //margin: 12px 0 32px;
 }
 
 table tbody th {
   max-width: 100px;
-  padding: 13px 32px;
+  padding: 4px 16px;
   text-align: left;
 }
 
 td {
   font-weight: 400;
-  padding: 8px 30px;
+  padding: 4px 16px;
   @include letter-spacing(0.3);
 
   > p,
@@ -176,7 +176,7 @@ td {
 th {
   @include font-size(16);
   font-weight: 500;
-  padding: 13px 32px;
+  padding: 4px 16px;
   text-align: left;
 }
 

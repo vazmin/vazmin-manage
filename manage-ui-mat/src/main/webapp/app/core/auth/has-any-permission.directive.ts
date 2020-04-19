@@ -1,7 +1,8 @@
+/*
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Principal } from './principal.service';
 
-/**
+/!**
  * @whatItDoes Conditionally includes an HTML element if current user has any
  * of the authorities passed as the `expression`.
  *
@@ -11,12 +12,12 @@ import { Principal } from './principal.service';
  *
  *     <some-element *hasAnyPermission="['/path1', '/path2']">...</some-element>
  * ```
- */
-/* tslint:disable */
+ *!/
+/!* tslint:disable *!/
 @Directive({
     selector: '[hasAnyPermission]'
 })
-/* tslint:enable */
+/!* tslint:enable *!/
 export class HasAnyPermissionDirective {
 
     private permission: string[] = [];
@@ -45,3 +46,4 @@ export class HasAnyPermissionDirective {
         });
     }
 }
+*/

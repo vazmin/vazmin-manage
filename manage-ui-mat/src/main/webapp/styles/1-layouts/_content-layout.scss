@@ -3,16 +3,16 @@
 }
 
 .sidenav-content {
-
-  padding: 80px 3rem 2rem;
+  min-height: calc(100vh - 80px);
+  padding: 60px 3rem 2rem;
 
   @media screen and (max-width: 600px) {
-    min-height: 450px;
-    padding: 80px 2rem 1rem;
+    min-height: calc(100vh - 70px);
+    padding: 60px 2rem 1rem;
   }
 
   @media screen and (max-width: 480px) {
-    padding: 80px 1rem 1rem;
+    padding: 60px 1rem 1rem;
   }
 
   aio-shell.page-docs & {

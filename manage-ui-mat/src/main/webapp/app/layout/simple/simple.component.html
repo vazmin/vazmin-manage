@@ -1,1 +1,20 @@
+<app-top-menu class="mat-elevation-z6" (menuToggle)="sidenav.toggle()"></app-top-menu>
 
+<mat-sidenav-container class="sidenav-container" [class.starting]="isStarting">
+
+  <mat-sidenav [ngClass]="{'collapsed': !isSideBySide}" #sidenav class="sidenav" [mode]="mode" [opened]="isOpened" (openedChange)="updateHostClasses()">
+    <aio-nav-menu *ngIf="!isSideBySide" [nodes]="topMenuNarrowNodes" [currentNode]="currentNodes?.TopBarNarrow" [isWide]="false"></aio-nav-menu>
+    <aio-nav-menu [nodes]="sideNavNodes" [currentNode]="currentNodes?.SideNav" [isWide]="isSideBySide"></aio-nav-menu>
+
+  </mat-sidenav>
+
+  <main class="sidenav-content">
+    <div class="main-container">
+      <p>main works!</p>
+      <ng-content select="router-outlet"></ng-content>
+    </div>
+
+    <app-footer></app-footer>
+  </main>
+
+</mat-sidenav-container>

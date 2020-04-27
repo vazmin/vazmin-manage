@@ -6,7 +6,7 @@
 
     <sql id="columns_no_id">
         parent_id, code, value, order_number, pkg_name, 
-        path, method, enable, inlet, discard, allow_access_authenticated
+        path, method, enable, inlet, discard, common
     </sql>
 
     <sql id="columns">
@@ -15,7 +15,7 @@
 
     <sql id="columns_join">
         a.id, a.parent_id, a.code, a.value, a.order_number, 
-        a.pkg_name, a.path, a.method, a.enable, a.inlet, a.discard, a.allow_access_authenticated
+        a.pkg_name, a.path, a.method, a.enable, a.inlet, a.discard, a.common
         
     </sql>
 
@@ -34,7 +34,7 @@
             <if test="enable not in {null, ''}">AND a.enable = #{enable}</if>
             <if test="inlet not in {null, ''}">AND a.inlet = #{inlet}</if>
             <if test="discard not in {null, ''}">AND a.discard = #{discard}</if>
-            <if test="allowAccessAuthenticated != null">AND a.allow_access_authenticated = #{allowAccessAuthenticated}</if>
+            <if test="common != null">AND a.common = #{common}</if>
             <include refid="likeWhere"/>
         </where>
     </sql>
@@ -79,7 +79,7 @@
         VALUES
         (
         #{parentId}, #{code}, #{value}, #{orderNumber}, #{pkgName}, 
-        #{path}, #{method}, #{enable}, #{inlet}, #{discard}, #{allowAccessAuthenticated}
+        #{path}, #{method}, #{enable}, #{inlet}, #{discard}, #{common}
         )
     </insert>
 
@@ -96,7 +96,7 @@
             <if test="enable != null">enable=#{enable}, </if>
             <if test="inlet != null">inlet=#{inlet}, </if>
             <if test="discard != null">discard=#{discard},</if>
-            <if test="allowAccessAuthenticated != null">allow_access_authenticated=#{allowAccessAuthenticated}</if>
+            <if test="common != null">common=#{common}</if>
         </set>
         WHERE id = #{id}
     </update>

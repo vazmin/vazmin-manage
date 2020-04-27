@@ -1,0 +1,19 @@
+form {
+  padding-top: 24px;
+}
+
+.login-action {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+  .forget-password {
+    flex-grow: 1;
+    line-height: 4rem;
+  }
+
+  .login {
+    flex-grow: 1;
+    text-align: right;
+  }
+}
+

@@ -1,0 +1,41 @@
+<app-auth-block>
+  <h4>登录</h4>
+  <p>使用你的邮箱</p>
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>username</mat-label>
+      <input matInput placeholder="请输入您的用户名" name="username" id="username" formControlName="username">
+
+      <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
+        username is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>password</mat-label>
+      <input matInput [type]="visibility ? 'text' : 'password'" placeholder="请输入您的密码"
+             name="password" id="password" formControlName="password">
+      <button type="button" matSuffix mat-icon-button aria-label="visibility"
+              matTooltip="{{visibility? '隐藏' : '显示'}}密码"
+              (click)="visibility = !visibility">
+        <mat-icon>{{visibility ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+        password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <div class="login-action">
+    <div class="forget-password">
+      <a href="">忘记密码？</a>
+    </div>
+    <div class="login">
+      <button mat-raised-button color="primary" type="submit" >登录</button>
+    </div>
+  </div>
+
+</form>
+</app-auth-block>
+

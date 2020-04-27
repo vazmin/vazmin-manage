@@ -40,13 +40,7 @@ public class ManageUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
         if (adminUsername.equals(username)) {
-            ManageUser manageUser = new ManageUser();
-            manageUser.setId(0L);
-            manageUser.setUsername(adminUsername);
-            manageUser.setPassword(adminPassword);
-            manageUser.setName("超级管理员");
-            manageUser.setAdmin(true);
-            manageUser.setStatus(StatusEnum.VALID.getValue());
+            ManageUser manageUser = manageUserService.buildAdmin(adminUsername, adminPassword);
             return new ManageUserDetails(manageUser);
         } else {
             ManageUser manageUser = manageUserService.getByUsernameTakePrincipal(username);

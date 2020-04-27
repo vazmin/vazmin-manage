@@ -1,0 +1,20 @@
+.view-column-menu{
+  min-width: 220px;
+  .check-box-all-list {
+    padding-top: 0;
+  }
+  ::ng-deep.check-box-all {
+    width: 100%;
+    label.mat-checkbox-layout {
+      display: flex;
+      justify-content: space-between;
+      div {
+        margin-right: 0;
+      }
+    }
+  }
+}
+.view-column-action {
+  display: flex;
+  justify-content: center;
+}

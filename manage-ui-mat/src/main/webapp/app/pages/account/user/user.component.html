@@ -1,20 +1,37 @@
-<p>user works!</p>
 
+<div class="data-container ">
+  <div class="table-tools">
+    <div>
+      <h4>用户管理</h4>
+    </div>
+    <div>
+      <button mat-icon-button color="primary"><mat-icon>create</mat-icon></button>
+      <button mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+      <app-view-column [columns]="columns" (onSelected)="viewColumnSelected($event)"></app-view-column>
+    </div>
+  </div>
+  <div>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>username</mat-label>
+        <input matInput placeholder="Ex. Pizza" >
+      </mat-form-field>
 
-<div class="data-container mat-elevation-z8">
+    </form>
+  </div>
   <div class="table-container">
     <table mat-table [dataSource]="dataSource" class="app-table">
 
       <!-- Checkbox Column -->
       <ng-container matColumnDef="select" sticky >
-        <th mat-header-cell class="cb-column" *matHeaderCellDef>
+        <th mat-header-cell class="cb-column-header" *matHeaderCellDef>
           <mat-checkbox (change)="$event ? masterToggle() : null"
                         [checked]="selection.hasValue() && isAllSelected()"
                         [indeterminate]="selection.hasValue() && !isAllSelected()"
                         [aria-label]="checkboxLabel()">
           </mat-checkbox>
         </th>
-        <td mat-cell *matCellDef="let row">
+        <td mat-cell *matCellDef="let row" class="cb-column">
           <mat-checkbox (click)="$event.stopPropagation()"
                         (change)="$event ? selection.toggle(row) : null"
                         [checked]="selection.isSelected(row)"
@@ -51,6 +68,8 @@
       <ng-container matColumnDef="star" stickyEnd>
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
+          <mat-icon>more_vert</mat-icon>
+          <mat-icon>more_vert</mat-icon>
           <mat-icon>more_vert</mat-icon>
         </td>
       </ng-container>

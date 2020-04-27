@@ -158,7 +158,7 @@ public class ManageUserController implements ManageControllerInterface, ManageAu
      */
     @ResponseBody
     @RequestMapping(value = "/password", method = RequestMethod.POST)
-    @Command(value = MODULE_NAME + " 修改密码", allowAccessAuthenticated = true)
+    @Command(value = MODULE_NAME + " 修改密码", common = true)
     public void changePassword(@RequestAttribute ManageUser manageUser, @Valid @RequestBody KeyAndPasswordVM keyAndPassword)
             throws ServiceProcessException {
         ManageUserDetails manageUserDetails =

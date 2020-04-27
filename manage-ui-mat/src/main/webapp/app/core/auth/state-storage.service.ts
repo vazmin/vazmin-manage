@@ -15,10 +15,10 @@ export class StateStorageService {
         this.$sessionStorage.clear('previousState');
     }
 
-    storePreviousState(previousStateName, previousStateParams) {
-        const previousState = { 'name': previousStateName, 'params': previousStateParams };
-        this.$sessionStorage.store('previousState', previousState);
-    }
+    // storePreviousState(previousStateName, previousStateParams) {
+    //     const previousState = { 'name': previousStateName, 'params': previousStateParams };
+    //     this.$sessionStorage.store('previousState', previousState);
+    // }
 
     getDestinationState() {
         return this.$sessionStorage.retrieve('destinationState');
@@ -32,17 +32,17 @@ export class StateStorageService {
         return this.$sessionStorage.retrieve('previousUrl');
     }
 
-    storeDestinationState(destinationState, destinationStateParams, fromState) {
-        const destinationInfo = {
-            'destination': {
-                'name': destinationState.name,
-                'data': destinationState.data,
-            },
-            'params': destinationStateParams,
-            'from': {
-                'name': fromState.name,
-            }
-        };
-        this.$sessionStorage.store('destinationState', destinationInfo);
-    }
+    // storeDestinationState(destinationState, destinationStateParams, fromState) {
+    //     const destinationInfo = {
+    //         'destination': {
+    //             'name': destinationState.name,
+    //             'data': destinationState.data,
+    //         },
+    //         'params': destinationStateParams,
+    //         'from': {
+    //             'name': fromState.name,
+    //         }
+    //     };
+    //     this.$sessionStorage.store('destinationState', destinationInfo);
+    // }
 }

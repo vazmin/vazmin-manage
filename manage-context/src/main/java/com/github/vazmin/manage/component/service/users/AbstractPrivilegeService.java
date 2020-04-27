@@ -174,7 +174,7 @@ public abstract class AbstractPrivilegeService<E> extends LongPKBaseService<E> {
         ngxTreeItem.setId(menuInfo.getMenuKey());
         ngxTreeItem.setName(menuInfo.getValue());
         ngxTreeItem.setOpen(true);
-        ngxTreeItem.setAccessReg(menuInfo.isAllowAccessAuthenticated());
+        ngxTreeItem.setAccessReg(menuInfo.isCommon());
         if (privilegeMap.containsKey(menuInfo.getMenuKey())) {
             ngxTreeItem.setChecked(true);
         }
@@ -196,7 +196,7 @@ public abstract class AbstractPrivilegeService<E> extends LongPKBaseService<E> {
         ngxTreeItem.setId(moduleInfo.getModuleKey());
         ngxTreeItem.setName(moduleInfo.getValue());
         ngxTreeItem.setOpen(true);
-        ngxTreeItem.setAccessReg(moduleInfo.isAllowAccessAuthenticated());
+        ngxTreeItem.setAccessReg(moduleInfo.isCommon());
         if (privilegeMap.containsKey(moduleInfo.getModuleKey())) {
             ngxTreeItem.setChecked(true);
         }
@@ -208,7 +208,7 @@ public abstract class AbstractPrivilegeService<E> extends LongPKBaseService<E> {
         boolean accessRegFlag = true;
         for(CommandInfo commandInfo: moduleInfo.getCommandList()){
             buildNgxTreeItem(commandInfo, privilegeMap, children);
-            if (!commandInfo.isAllowAccessAuthenticated()) {
+            if (!commandInfo.isCommon()) {
                 accessRegFlag = false;
             }
         }
@@ -223,7 +223,7 @@ public abstract class AbstractPrivilegeService<E> extends LongPKBaseService<E> {
         NgxTreeItem ngxTreeItem = new NgxTreeItem();
         ngxTreeItem.setId(commandInfo.getCommandKey());
         ngxTreeItem.setName(commandInfo.getValue());
-        ngxTreeItem.setAccessReg(commandInfo.isAllowAccessAuthenticated());
+        ngxTreeItem.setAccessReg(commandInfo.isCommon());
 //        ngxTreeItem.setOpen(true);
 
         if (privilegeMap.containsKey(commandInfo.getCommandKey())) {

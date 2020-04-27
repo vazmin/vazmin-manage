@@ -1,9 +1,5 @@
-import {ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit} from '@angular/core';
-import {MediaMatcher} from '@angular/cdk/layout';
-import {CurrentNodes, NavigationNode} from 'app/shared/components/navigation/navigation.model';
-import {LocationService} from 'app/shared/location.service';
-import {ScrollService} from 'app/shared/scroll.service';
-import {NavigationService} from 'app/shared/components/navigation/navigation.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+
 
 @Component({
   selector: 'app-root',

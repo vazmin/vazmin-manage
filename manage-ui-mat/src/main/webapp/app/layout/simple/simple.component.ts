@@ -2,11 +2,11 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {
     CurrentNodes,
     NavigationNode
-} from 'app/shared/components/navigation/navigation.model';
+} from 'app/components/navigation/navigation.model';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {LocationService} from 'app/shared/location.service';
 import {ScrollService} from 'app/shared/scroll.service';
-import {NavigationService} from 'app/shared/components/navigation/navigation.service';
+import {NavigationService} from 'app/components/navigation/navigation.service';
 
 @Component({
   selector: 'app-simple-layout',
@@ -44,7 +44,6 @@ export class SimpleComponent implements OnInit {
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         this.isSideBySide = !this.mobileQuery.matches;
         this.mobileQuery.addListener(this._mobileQueryListener);
-        console.log("s")
     }
 
     ngOnDestroy(): void {

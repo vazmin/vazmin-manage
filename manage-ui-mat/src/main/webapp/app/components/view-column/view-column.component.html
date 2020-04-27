@@ -1,0 +1,30 @@
+<button mat-icon-button [matMenuTriggerFor]="viewColumnMenu" #columnTrigger="matMenuTrigger"
+        aria-label="Example icon-button with a heart icon">
+  <mat-icon>view_column</mat-icon>
+</button>
+<mat-menu #viewColumnMenu="matMenu" >
+  <div (click)="$event.stopPropagation()" class="view-column-menu">
+    <mat-action-list class="check-box-all-list">
+      <button mat-list-item >
+        <mat-checkbox (change)="allSelectionChange($event.checked)" class="check-box-all"
+            [checked]="checked"
+            [indeterminate]="indeterminate"
+            labelPosition="before">
+        {{labelAllSelected}}
+        </mat-checkbox>
+      </button>
+    </mat-action-list>
+    <mat-divider></mat-divider>
+    <mat-selection-list #selectionList (selectionChange)="selectionChange()">
+      <mat-list-option *ngFor="let column of columns; let i = index" [value]="i + delimiter + column">
+        {{column}}
+      </mat-list-option>
+    </mat-selection-list>
+    <mat-divider></mat-divider>
+    <div class="view-column-action">
+      <button mat-button (click)="viewColumn(selectionList.selectedOptions.selected);columnTrigger.closeMenu()">ok</button>
+      <button mat-button (click)="columnTrigger.closeMenu()">cancel</button>
+    </div>
+
+  </div>
+</mat-menu>

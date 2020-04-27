@@ -117,8 +117,8 @@ public class ManageUserService extends LongPKBaseService<ManageUser> {
      */
     public ManageUser getByUsernameTakePrincipal(String username) {
         ManageUser manageUser = userCacheService.getByUsername(username);
-        if (manageUser == null) {
-            return null;
+        if (manageUser == null || manageUser.getId() == 0) {
+            return manageUser;
         }
         manageUser.setManageRoleList(manageRoleService.getListByUserId(manageUser.getId()));
         List<Long> roleIdList = manageUser.getManageRoleList()
@@ -226,7 +226,17 @@ public class ManageUserService extends LongPKBaseService<ManageUser> {
         return privilegeSet;
     }
 
-
+    @CachePut(cacheNames = Constants.CacheKey.MANAGE_USER, key = "#adminUsername")
+    public ManageUser buildAdmin(String adminUsername, String adminPassword) {
+        ManageUser manageUser = new ManageUser();
+        manageUser.setId(0L);
+        manageUser.setUsername(adminUsername);
+        manageUser.setPassword(adminPassword);
+        manageUser.setName("超级管理员");
+        manageUser.setAdmin(true);
+        manageUser.setStatus(StatusEnum.VALID.getValue());
+        return manageUser;
+    }
 
     /**
      * 保存用户信息

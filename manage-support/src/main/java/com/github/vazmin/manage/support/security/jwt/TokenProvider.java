@@ -25,6 +25,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -95,6 +96,7 @@ public class TokenProvider implements InitializingBean {
             .setSigningKey(key)
             .parseClaimsJws(token)
             .getBody();
+
 
         ManageUser manageUser = manageUserService.getByUsernameTakePrincipal(claims.getSubject());
         Collection<? extends GrantedAuthority> authorities =

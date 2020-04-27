@@ -26,7 +26,7 @@ public abstract class PermissionUserDetails implements PermissionUserDetailsInte
      */
     @Override
     public boolean hasPermission(CommandInfo commandInfo) {
-        return isAdmin() || (commandInfo == null || commandInfo.isAllowAccessAuthenticated()
+        return isAdmin() || (commandInfo == null || commandInfo.isCommon()
                 || getPrivilegeKeySet().contains(commandInfo.getCommandKey()));
     }
 
@@ -40,7 +40,7 @@ public abstract class PermissionUserDetails implements PermissionUserDetailsInte
     public boolean hasPermission(ModuleInfo moduleInfo) {
         return isAdmin() || (moduleInfo != null
                 && (getPrivilegeKeySet().contains(moduleInfo.getModuleKey())
-                || moduleInfo.isAllowAccessAuthenticated()));
+                || moduleInfo.isCommon()));
     }
 
     /**
@@ -53,6 +53,6 @@ public abstract class PermissionUserDetails implements PermissionUserDetailsInte
     public boolean hasPermission(MenuInfo menuInfo) {
         return isAdmin() || (menuInfo != null
                 && (getPrivilegeKeySet().contains(menuInfo.getMenuKey())
-                || menuInfo.isAllowAccessAuthenticated()));
+                || menuInfo.isCommon()));
     }
 }

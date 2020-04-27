@@ -1,0 +1,122 @@
+:host ::ng-deep {
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .auth-view {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    position: relative;
+    z-index: 2
+  }
+
+  .auth-view.auth-mh {
+    min-height: 100vh
+  }
+
+  @media all and (min-width: 601px) {
+    .auth-view {
+      border-radius: 8px;
+      border: 1px solid #dadce0;
+      display: block;
+      flex-shrink: 0;
+      margin: 0 auto;
+      min-height: 0;
+      transition: .2s;
+      width: 450px
+    }
+
+    .auth-view.auth-mh {
+      min-height: 0
+    }
+
+    .auth-view.auth-view-size {
+      width: 450px
+    }
+  }
+
+
+
+
+  .auth-body {
+    -webkit-box-flex: 1;
+    box-flex: 1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    overflow: hidden;
+    padding: 24px 24px 36px
+  }
+
+
+
+  @media all and (min-width: 450px) {
+    .auth-body {
+      padding:48px 40px 36px
+    }
+  }
+
+  @media all and (min-width: 601px) {
+    .auth-body {
+      height:auto;
+      min-height: 500px;
+      overflow-y: auto;
+      -webkit-transition: .2s;
+      transition: .2s
+    }
+
+    .auth-view.auth-view-size .auth-body {
+      height: auto;
+      min-height: 500px
+    }
+  }
+
+
+  .auth-container,.auth-container:before,.auth-container:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
+  }
+
+  .auth-container *,.auth-container *:before,.auth-container *:after {
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit
+  }
+
+  @media all and (min-width: 601px) {
+    .auth-container {
+      display:-webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-direction: column;
+      flex-direction: column;
+      min-height: 100vh;
+      position: relative
+    }
+
+    .auth-container:before,.auth-container:after {
+      content: '';
+      display: block;
+      -webkit-box-flex: 1;
+      box-flex: 1;
+      -webkit-flex-grow: 1;
+      flex-grow: 1;
+      height: 24px;
+    }
+
+    .auth-container:before {
+      min-height: 30px;
+    }
+
+    .auth-container:after {
+      min-height: 24px
+    }
+
+    .auth-container.auth-mh:after {
+      min-height: 65.3329px
+    }
+  }
+
+
+}

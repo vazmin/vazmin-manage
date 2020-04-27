@@ -1,7 +1,7 @@
 @import '~@angular/material/theming';
 
 // Mixin to apply theme colors for both generated API docs and markdown docs (guides/overviews).
-@mixin docs-site-tables-theme($theme) {
+@mixin app-tables-theme($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
   $warn: map-get($theme, warn);
@@ -23,5 +23,14 @@
   .docs-api td,
   .docs-markdown-td {
     border: 1px solid rgba(mat-color($foreground, secondary-text), $tableBorderOpacity);
+  }
+
+  .data-container {
+    .mat-paginator, .mat-table {
+      background: mat-color($background, background);
+    }
+  }
+  .view-column-action {
+    color: mat-color($foreground, text);
   }
 }

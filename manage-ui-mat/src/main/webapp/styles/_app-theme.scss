@@ -4,7 +4,7 @@
 //@import './2-modules/api-theme';
 //@import './2-modules/markdown-theme';
 //@import './2-modules/svg-theme';
-//@import './2-modules/tables-theme';
+@import './2-modules/tables-theme';
 @import './1-layouts/sidenav-theme';
 
 // Styles for the docs app that are based on the current theme.
@@ -51,7 +51,7 @@
   //@include home-page-theme($theme);
   @include top-menu-theme($theme);
   @include app-sidenav-theme($theme);
-  //@include table-of-contents-theme($theme);
+  @include app-tables-theme($theme);
 }
 
 // Define the light theme.

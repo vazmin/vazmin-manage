@@ -8,9 +8,10 @@ table.app-table {
   tr.mat-row, tr.mat-footer-row {
     height: 40px;
   }
-  .cb-column {
+  .cb-column, .cb-column-header {
     width: 20px;
-    padding-right: 24px;
+    padding-right: 16px;
+    padding-left: 16px !important;
   }
 }
 
@@ -19,4 +20,10 @@ table.app-table {
   width: 100%;
   overflow-y: auto;
   @include small-scrollbars();
+  padding-bottom: 2px;
+}
+
+.table-tools {
+  display: flex;
+  justify-content: space-between;
 }

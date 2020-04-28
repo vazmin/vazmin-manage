@@ -69,7 +69,7 @@ public class ManageUserController implements ManageControllerInterface, ManageAu
      * @return the ResponseEntity with status 200 (OK) and with body the ManageUser list
      */
     @Command(MODULE_NAME + " list")
-    @GetMapping(value = "")
+    @GetMapping()
     public ResponseEntity<List<ManageUser>> list(Pagination pagination, Query query) {
 
         List<ManageUser> manageUserList

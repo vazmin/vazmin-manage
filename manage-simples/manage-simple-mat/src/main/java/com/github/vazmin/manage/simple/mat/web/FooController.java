@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * Created by Chwing on 2019/8/7.
  */
-@Module(value = "FooModule", order = 1, icon = "icon ion-md-color-palette",
+@Module(value = "FooModule", order = 1, icon = "face",
         common = true)
 @RestController
 @RequestMapping("/api/foo")

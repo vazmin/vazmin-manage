@@ -26,7 +26,6 @@ import {MatCardModule} from '@angular/material/card';
 import {ViewColumnComponent} from 'app/components/view-column/view-column.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {AuthGuard} from 'app/core/security/auth-guard.service';
 
 const LAYOUT_COMPONENT = [
   FooterComponent,
@@ -44,7 +43,7 @@ const LAYOUT_COMPONENT = [
   imports: [
     AppSharedModule,
     PagesRoutingModule,
-
+    AppSharedModule,
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,

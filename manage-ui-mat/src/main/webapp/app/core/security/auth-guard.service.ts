@@ -6,6 +6,8 @@ import {
 import {StateStorageService} from '../auth/state-storage.service';
 import {AccountService} from 'app/core/auth/account.service';
 import {HTTP_METHOD} from 'app/app.constants';
+import {LoginService} from 'app/shared/auth/login/login.service';
+import {Logger} from 'app/shared/logger.service';
 
 /**
  *
@@ -19,6 +21,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   constructor(private accountService: AccountService,
               private stateStorageService: StateStorageService,
+              private logger: Logger,
               private router: Router) {
   }
 
@@ -26,15 +29,16 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
     const isCommon = route.data['common'];
     const method = route.data['method'];
-    console.log('AuthGuard#canActivate called. isAuthenticated: '
-        + this.accountService.isAuthenticated()
-        + ';access is authenticated: ' + isCommon
-        + ';state url: ' + state.url);
+
+    this.logger.log('canActivate called',
+      ', isAuthenticated: ' + this.accountService.isAuthenticated()
+        ,', isCommon: ' + isCommon
+        , ', state url: ' + state.url);
     return this.checkLogin(this.processUrl(state.url), method, isCommon);
   }
 
   /**
-   * 多级路径会调用多次，唯末级才进行验证
+   * 唯末级才进行验证
    * @param {ActivatedRouteSnapshot} route
    * @param {RouterStateSnapshot} state
    * @returns {Promise<boolean> | boolean}
@@ -42,17 +46,15 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
     const isCommon = route.data['common'];
     const method = route.data['method'] ? route.data['method'] : HTTP_METHOD.GET;
-    console.log('AuthGuard#canActivateChild called. isAuthenticated: '
-      + this.accountService.isAuthenticated()
-      + '; access is authenticated: ' + isCommon
-      + '; state url: ' + state.url
-      + '; method: ' + method);
-    return route.firstChild == null ?
-      this.checkLogin(this.processUrl(state.url), '#' + method, isCommon) : true;
+    this.logger.log('canActivateChild called',
+      ', isAuthenticated: ' + this.accountService.isAuthenticated()
+      ,', isCommon: ' + isCommon
+      , ', state url: ' + state.url);
+    if (route.firstChild != null) return true;
+    return this.checkLogin(this.processUrl(state.url), '#' + method, isCommon);
   }
 
   checkLogin(url: string, method: string, isCommon: boolean): Promise<boolean> {
-    // console.log("check url: " + url);
     const urlMethod = url + method;
     const accountService = this.accountService;
     return Promise.resolve(
@@ -61,7 +63,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
           if (isCommon) {
             return true;
           }
-          return accountService.hasAnyAuthority(urlMethod);
+          const allow = accountService.hasAnyAuthority(urlMethod);
+          this.logger.log(urlMethod, allow);
+          return allow;
         }
         this.stateStorageService.storeUrl(url);
         this.router.navigate(['/auth/login']);

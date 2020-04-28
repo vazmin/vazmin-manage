@@ -1,36 +1,35 @@
-<div *ngIf="!node.hidden">
-  <div *ngIf="!node.children" class="vertical-menu-item-warp">
+<div *ngIf="node.type != 0" class="vertical-menu-item-warp">
 
-    <a routerLink="{{node.url}}" [ngClass]="classes" title="{{node.tooltip}}"
-       class="vertical-menu-item">
-      <mat-icon  class="item-icon" *ngIf="node.icon">{{node.icon}}</mat-icon>
-      <span>{{node.title}}</span>
-    </a>
+  <a routerLink="{{node.url | replace: '/api' : '/pages'}}"
+     [ngClass]="classes" title="{{node.tooltip}}"
+     class="vertical-menu-item">
+    <mat-icon  class="item-icon" *ngIf="node.icon">{{node.icon}}</mat-icon>
+    <span>{{node.title}}</span>
+  </a>
+</div>
+
+<div *ngIf="node.children && node.type == 0" class="vertical-menu-item-warp">
+  <a *ngIf="!node.url" routerLink="{{node.url | replace: '/api' : '/pages'}}"
+     [ngClass]="classes" title="{{node.tooltip}}"
+     (click)="headerClicked()" class="vertical-menu-item heading">
+    <mat-icon class="item-icon" *ngIf="node.icon">{{node.icon}}</mat-icon>
+    <span>{{node.title}}</span>
+    <mat-icon class="rotating-icon" >keyboard_arrow_right</mat-icon>
+  </a>
+
+  <button *ngIf="node.url" type="button" [ngClass]="classes" title="{{node.tooltip}}"
+          (click)="headerClicked()" class="vertical-menu-item heading"
+          [attr.aria-pressed]="isExpanded">
+    <mat-icon class="item-icon" *ngIf="node.icon">{{node.icon}}</mat-icon>
+    <span>{{node.title}}</span>
+    <mat-icon class="rotating-icon">keyboard_arrow_right</mat-icon>
+  </button>
+
+  <div class="heading-children" [ngClass]="classes">
+    <aio-nav-item *ngFor="let node of nodeChildren" [level]="level + 1" [isWide]="isWide"
+                  [isParentExpanded]="isExpanded"
+                  [node]="node" [selectedNodes]="selectedNodes"></aio-nav-item>
   </div>
 
-
-  <div *ngIf="node.children" class="vertical-menu-item-warp">
-    <a *ngIf="!node.url" routerLink="{{node.url}}" [ngClass]="classes" title="{{node.tooltip}}"
-       (click)="headerClicked()" class="vertical-menu-item heading">
-      <mat-icon class="item-icon" *ngIf="node.icon">{{node.icon}}</mat-icon>
-      <span>{{node.title}}</span>
-      <mat-icon class="rotating-icon" >keyboard_arrow_right</mat-icon>
-    </a>
-
-    <button *ngIf="node.url" type="button" [ngClass]="classes" title="{{node.tooltip}}"
-            (click)="headerClicked()" class="vertical-menu-item heading"
-            [attr.aria-pressed]="isExpanded">
-      <mat-icon class="item-icon" *ngIf="node.icon">{{node.icon}}</mat-icon>
-      <span>{{node.title}}</span>
-      <mat-icon class="rotating-icon">keyboard_arrow_right</mat-icon>
-    </button>
-
-    <div class="heading-children" [ngClass]="classes">
-      <aio-nav-item *ngFor="let node of nodeChildren" [level]="level + 1" [isWide]="isWide"
-                    [isParentExpanded]="isExpanded"
-                    [node]="node" [selectedNodes]="selectedNodes"></aio-nav-item>
-    </div>
-
-  </div>
 </div>
 

@@ -74,6 +74,8 @@ public class AuthService {
                     if(!commandInfo.isDiscard() && manageUserDetails.hasPermission(commandInfo)) {
                         MenuVM commandMenuVM =
                                 new MenuVM(ItemTypeEnum.COMMAND, commandInfo);
+                        commandMenuVM.setHidden(!commandInfo.isShowInMenu());
+                        commandMenuVM.setMethod(commandInfo.getMethod());
                         moduleMenuVM.addChildren(commandMenuVM, false);
                     }
                 }

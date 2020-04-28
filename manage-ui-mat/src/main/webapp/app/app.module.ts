@@ -24,6 +24,7 @@ import {CoreModule} from 'app/core/core.module';
 import {AppSharedModule} from 'app/shared/shared.module';
 import {NgxWebstorageModule} from 'ngx-webstorage';
 import {AuthGuard} from 'app/core/security/auth-guard.service';
+import {Logger} from 'app/shared/logger.service';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import {AuthGuard} from 'app/core/security/auth-guard.service';
     LocationService,
     NavigationService,
     ScrollService,
+    Logger
   ],
   bootstrap: [AppComponent]
 })

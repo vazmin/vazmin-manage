@@ -15,6 +15,7 @@ export interface NavigationNode {
   hidden?: boolean;
   method?: string;
   common?: boolean;
+  type?: 0 | 1 | 2;
   children?: NavigationNode[];
 }
 

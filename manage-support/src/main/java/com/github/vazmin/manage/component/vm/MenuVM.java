@@ -53,6 +53,8 @@ public class MenuVM {
 
     private boolean hidden;
 
+    private String method;
+
     private Set<MenuVM> children;
 
     public String getTitle() {
@@ -112,6 +114,14 @@ public class MenuVM {
 
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String method) {
+        this.method = method;
     }
 
     public Set<MenuVM> getChildren() {

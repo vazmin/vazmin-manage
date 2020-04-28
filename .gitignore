@@ -31,3 +31,4 @@ manage-simple/node
 node
 
 .flattened-pom.xml
+*-local.yml

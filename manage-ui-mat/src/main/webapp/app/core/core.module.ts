@@ -17,6 +17,8 @@ import {NgxWebstorageModule} from 'ngx-webstorage';
 import {AccountService} from 'app/core/auth/account.service';
 import {AuthInterceptor} from 'app/blocks/interceptor/auth.interceptor';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {FloorPipe} from 'app/shared/pipes/floor.pipe';
+import {ReplacePipe} from 'app/shared/pipes/replace.pipe';
 
 
 
@@ -26,7 +28,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
   ],
   imports: [
     CommonModule,
-    NgxWebstorageModule.forRoot({ prefix: 'app', separator: '-' }),
+    NgxWebstorageModule.forRoot({prefix: 'app', separator: '-'}),
 
   ],
   providers: [

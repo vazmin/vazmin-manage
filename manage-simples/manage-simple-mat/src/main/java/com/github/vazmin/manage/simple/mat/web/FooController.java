@@ -33,7 +33,7 @@ public class FooController {
 
 
     @Command("command")
-    @GetMapping("/")
+    @GetMapping("")
     public List<CommandInfo> foo() throws ServiceProcessException {
         return commandInfoService.getList();
     }

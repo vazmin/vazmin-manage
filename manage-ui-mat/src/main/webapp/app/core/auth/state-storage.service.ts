@@ -1,48 +1,25 @@
-import { Injectable } from '@angular/core';
-import { SessionStorageService } from 'ngx-webstorage';
+import {Injectable} from '@angular/core';
+import {SessionStorageService} from 'ngx-webstorage';
 
 @Injectable()
 export class StateStorageService {
-    constructor(
-        private $sessionStorage: SessionStorageService
-    ) {}
 
-    getPreviousState() {
-        return this.$sessionStorage.retrieve('previousState');
-    }
+  private previousUrlKey = 'previousUrl';
 
-    resetPreviousState() {
-        this.$sessionStorage.clear('previousState');
-    }
+  constructor(
+    private $sessionStorage: SessionStorageService
+  ) {
+  }
 
-    // storePreviousState(previousStateName, previousStateParams) {
-    //     const previousState = { 'name': previousStateName, 'params': previousStateParams };
-    //     this.$sessionStorage.store('previousState', previousState);
-    // }
+  storeUrl(url: string): void {
+    this.$sessionStorage.store(this.previousUrlKey, url);
+  }
 
-    getDestinationState() {
-        return this.$sessionStorage.retrieve('destinationState');
-    }
+  getUrl(): string | null | undefined {
+    return this.$sessionStorage.retrieve(this.previousUrlKey);
+  }
 
-    storeUrl(url: string) {
-        this.$sessionStorage.store('previousUrl', url);
-    }
-
-    getUrl() {
-        return this.$sessionStorage.retrieve('previousUrl');
-    }
-
-    // storeDestinationState(destinationState, destinationStateParams, fromState) {
-    //     const destinationInfo = {
-    //         'destination': {
-    //             'name': destinationState.name,
-    //             'data': destinationState.data,
-    //         },
-    //         'params': destinationStateParams,
-    //         'from': {
-    //             'name': fromState.name,
-    //         }
-    //     };
-    //     this.$sessionStorage.store('destinationState', destinationInfo);
-    // }
+  clearUrl(): void {
+    this.$sessionStorage.clear(this.previousUrlKey);
+  }
 }

@@ -1,5 +1,6 @@
 package com.github.vazmin.manage.component.config;
 
+import com.github.vazmin.manage.component.model.Constants;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.cors.CorsConfiguration;
 
@@ -220,6 +221,8 @@ public class ManageProperties {
 
         private final Memcached memcached = new Memcached();
 
+        private final Redis redis = new Redis();
+
         public Hazelcast getHazelcast() {
             return hazelcast;
         }
@@ -234,6 +237,25 @@ public class ManageProperties {
 
         public Memcached getMemcached() {
             return memcached;
+        }
+
+        public Redis getRedis() {
+            return redis;
+        }
+
+        public static class Redis {
+
+            private int expiration = ManageDefaults.Cache.Redis.expiration;
+
+            public int getExpiration() {
+                return expiration;
+            }
+
+            public void setExpiration(int expiration) {
+                this.expiration = expiration;
+            }
+
+
         }
 
         public static class Hazelcast {

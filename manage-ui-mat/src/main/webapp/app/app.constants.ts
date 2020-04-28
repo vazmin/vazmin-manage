@@ -9,3 +9,5 @@ import {environment} from '../environments/environment';
 // export const DEBUG_INFO_ENABLED = Boolean(process.env.DEBUG_INFO_ENABLED);
 export const SERVER_API_URL = environment.SERVER_API_URL;
 // export const BUILD_TIMESTAMP = process.env.BUILD_TIMESTAMP;
+
+export const  enum HTTP_METHOD {GET = "GET", POST = "POST", PUT = "PUT", DELETE = "DELETE" }

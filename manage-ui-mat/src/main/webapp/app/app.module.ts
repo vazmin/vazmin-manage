@@ -22,6 +22,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {CoreModule} from 'app/core/core.module';
 import {AppSharedModule} from 'app/shared/shared.module';
+import {NgxWebstorageModule} from 'ngx-webstorage';
+import {AuthGuard} from 'app/core/security/auth-guard.service';
 
 
 @NgModule({
@@ -36,7 +38,6 @@ import {AppSharedModule} from 'app/shared/shared.module';
     BrowserAnimationsModule,
     AppSharedModule,
     CoreModule,
-
   ],
   providers: [
     {provide: LocationStrategy, useClass: PathLocationStrategy},

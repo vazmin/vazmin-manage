@@ -15,35 +15,35 @@ public class MenuVM {
 
     public MenuVM() {
     }
-    public MenuVM(ItemTypeEnum type,String title, String link) {
+    public MenuVM(ItemTypeEnum type,String title, String url) {
         this.type = type.getValue();
         this.title = title;
-        this.link = link;
+        this.url = url;
     }
 
     public MenuVM(ItemTypeEnum type, BaseInfo baseInfo) {
         this.type = type.getValue();
         this.title = baseInfo.getValue();
-        this.link = baseInfo.getPath();
+        this.url = baseInfo.getPath();
         this.order = baseInfo.getOrderNumber();
     }
 
     public MenuVM(ItemTypeEnum type, BaseInfo baseInfo, boolean hidden) {
         this.type = type.getValue();
         this.title = baseInfo.getValue();
-        this.link = baseInfo.getPath();
+        this.url = baseInfo.getPath();
         this.order = baseInfo.getOrderNumber();
         this.hidden = hidden;
     }
 
-    public MenuVM(Integer type, String link) {
+    public MenuVM(Integer type, String url) {
         this.type = type;
-        this.link = link;
+        this.url = url;
     }
 
     private String title;
 
-    private String link;
+    private String url;
 
     private Integer type;
 
@@ -63,19 +63,19 @@ public class MenuVM {
         this.title = title;
     }
 
-    public String getLink() {
-//        if(link == null && children != null
+    public String getUrl() {
+//        if(url == null && children != null
 //                && ItemTypeEnum.MENU == ItemTypeEnum.valueOf(type)){
 //            children.stream()
 //                    .findFirst()
 //                    .ifPresent(c ->
-//                            link = c.link.substring(0, c.link.lastIndexOf("/")));
+//                            url = c.url.substring(0, c.url.lastIndexOf("/")));
 //        }
-        return link;
+        return url;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Integer getType() {

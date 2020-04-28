@@ -7,6 +7,7 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {LocationService} from 'app/shared/location.service';
 import {ScrollService} from 'app/shared/scroll.service';
 import {NavigationService} from 'app/components/navigation/navigation.service';
+import {AccountService} from 'app/core/auth/account.service';
 
 @Component({
   selector: 'app-simple-layout',
@@ -39,7 +40,8 @@ export class SimpleComponent implements OnInit {
     constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,
                 public locationService: LocationService,
                 public scrollService: ScrollService,
-                public navigationService: NavigationService) {
+                public navigationService: NavigationService,
+                private accountService: AccountService) {
         this.mobileQuery = media.matchMedia('(max-width: '+ this.sideBySideWidth + 'px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
         this.isSideBySide = !this.mobileQuery.matches;
@@ -65,16 +67,17 @@ export class SimpleComponent implements OnInit {
             }
         });
 
-        this.navigationService.currentNodes.subscribe(currentNodes => {
-            this.currentNodes = currentNodes;
-        });
+      this.sideNavNodes = this.accountService.getMenuNodes();
+        // this.navigationService.currentNodes.subscribe(currentNodes => {
+        //     this.currentNodes = currentNodes;
+        // });
 
-        this.navigationService.navigationViews.subscribe(views => {
-            // this.footerNodes = views['Footer'] || [];
-            this.sideNavNodes = views['SideNav'] || [];
-            this.topMenuNodes = views['TopBar'] || [];
-            this.topMenuNarrowNodes = views['TopBarNarrow'] || this.topMenuNodes;
-        });
+        // this.navigationService.navigationViews.subscribe(views => {
+        //     // this.footerNodes = views['Footer'] || [];
+        //     this.sideNavNodes = views['SideNav'] || [];
+        //     this.topMenuNodes = views['TopBar'] || [];
+        //     this.topMenuNarrowNodes = views['TopBarNarrnow'] || this.topMenuNodes;
+        // });
 
     }
 

@@ -10,8 +10,11 @@ export interface NavigationNode {
   title: string;
   icon: string;
   url?: string;
+  link?: string;
   tooltip?: string;
   hidden?: boolean;
+  method?: string;
+  common?: boolean;
   children?: NavigationNode[];
 }
 

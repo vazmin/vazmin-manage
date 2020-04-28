@@ -1,5 +1,6 @@
 package com.github.vazmin.manage.simple.mat.config;
 
+import com.github.vazmin.manage.component.config.ManageProperties;
 import com.github.vazmin.manage.support.config.ProtostuffRedisSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
@@ -22,6 +23,9 @@ public class CacheConfiguration {
     @Autowired
     private Environment env;
 
+    @Autowired
+    private ManageProperties properties;
+
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisConf = new RedisStandaloneConfiguration();
@@ -40,7 +44,7 @@ public class CacheConfiguration {
     @Bean
     public RedisCacheConfiguration cacheConfig() {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofSeconds(600))
+                .entryTtl(Duration.ofSeconds(properties.getCache().getRedis().getExpiration()))
                 .disableCachingNullValues();
         redisCacheConfiguration = redisCacheConfiguration.serializeValuesWith(
                 RedisSerializationContext.SerializationPair.fromSerializer(new ProtostuffRedisSerializer<>()));

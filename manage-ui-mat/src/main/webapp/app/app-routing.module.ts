@@ -1,12 +1,17 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule} from '@angular/router';
 import {AuthComponent} from 'app/shared/auth/auth.component';
 import {LoginComponent} from 'app/shared/auth/login/login.component';
+import {AuthGuard} from 'app/core/security/auth-guard.service';
 
 
 const routes: Routes = [
   {
     path: 'pages',
+    canActivateChild: [AuthGuard],
+    data: {
+      common: true,
+    },
     loadChildren: () => import('./pages/pages.module')
       .then(m => m.PagesModule),
   },
@@ -28,4 +33,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

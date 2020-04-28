@@ -37,13 +37,10 @@ export class LoginComponent implements OnInit {
         () => {
           this.authenticationError = false;
           // this.activeModal.dismiss('login success');
-          if (
-            this.router.url === '/account/register' ||
-            this.router.url.startsWith('/account/activate') ||
-            this.router.url.startsWith('/account/reset/')
-          ) {
-            this.router.navigate(['']);
-          }
+          setTimeout(() => {
+            this.router.navigate(['/pages']).then(() => {});
+          }, 100);
+
 
           // this.eventManager.broadcast({
           //   name: 'authenticationSuccess',

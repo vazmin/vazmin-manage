@@ -24,7 +24,7 @@ public class UserCacheService {
     private ManageUserService manageUserService;
 
     // TODO: add cache put
-    @Cacheable(cacheNames = Constants.CacheKey.MANAGE_USER, key = "#username")
+    @Cacheable(cacheNames = Constants.CacheKey.MANAGE_USER, key = "#username", condition = "#result != null")
     public ManageUser getByUsername(String username) {
         return manageUserService.getByUsername(username);
     }

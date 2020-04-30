@@ -74,7 +74,9 @@ public class MenuInfoService extends LongPKBaseService<MenuInfo>{
      */
     public Map<String, MenuInfo> getMenuMap() {
         Map<String, MenuInfo> menuMap = new HashMap<>();
-        List<MenuInfo> menuInfoList = getList();
+        Map<String, Object> conditions = new HashMap<>();
+        conditions.put("discard", false);
+        List<MenuInfo> menuInfoList = getList(conditions);
         for (MenuInfo menuInfo: menuInfoList) {
             menuMap.put(menuInfo.getPkgName(), menuInfo);
         }

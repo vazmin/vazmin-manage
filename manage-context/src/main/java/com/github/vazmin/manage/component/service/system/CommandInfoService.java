@@ -83,7 +83,9 @@ public class CommandInfoService extends LongPKBaseService<CommandInfo> {
      */
     public Map<CommandInfo.Key, CommandInfo> getCommandMap() {
         Map<CommandInfo.Key, CommandInfo> commandMap = new HashMap<>();
-        List<CommandInfo> commandInfoList = getList();
+        Map<String, Object> conditions = new HashMap<>();
+        conditions.put("discard", false);
+        List<CommandInfo> commandInfoList = getList(conditions);
         for (CommandInfo commandInfo: commandInfoList) {
             commandInfo.setRequestMethod(RequestMethod.valueOf(commandInfo.getMethod()));
             commandMap.put(commandInfo.buildKey(), commandInfo);

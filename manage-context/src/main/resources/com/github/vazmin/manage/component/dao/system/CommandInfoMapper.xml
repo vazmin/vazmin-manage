@@ -33,7 +33,7 @@
             <if test="method !=null">AND a.method = #{method}</if>
             <if test="enable not in {null, ''}">AND a.enable = #{enable}</if>
             <if test="inlet not in {null, ''}">AND a.inlet = #{inlet}</if>
-            <if test="discard not in {null, ''}">AND a.discard = #{discard}</if>
+            <if test="discard != null">AND a.discard = #{discard}</if>
             <if test="common != null">AND a.common = #{common}</if>
             <include refid="likeWhere"/>
         </where>

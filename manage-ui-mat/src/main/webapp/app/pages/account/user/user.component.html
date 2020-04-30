@@ -20,9 +20,13 @@
     </form>
   </div>
   <div class="table-container">
-    <table mat-table [dataSource]="dataSource" class="app-table">
+    <table mat-table class="app-table"
+           matSort matSortActive="createDateStr" matSortDirection="desc">
 
       <!-- Checkbox Column -->
+<!--      <ng-template matColumnDef="select" sticky >-->
+<!--        <app-table-checkbox [dataSource]="dataSource"></app-table-checkbox>-->
+<!--      </ng-template>-->
       <ng-container matColumnDef="select" sticky >
         <th mat-header-cell class="cb-column-header" *matHeaderCellDef>
           <mat-checkbox (change)="$event ? masterToggle() : null"
@@ -39,6 +43,11 @@
           </mat-checkbox>
         </td>
       </ng-container>
+      <!-- username Column -->
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef> Username </th>
+        <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+      </ng-container>
 
       <!-- Name Column -->
       <ng-container matColumnDef="name">
@@ -46,22 +55,23 @@
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
 
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-      </ng-container>
-
       <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
+      <ng-container matColumnDef="security">
         <th mat-header-cell *matHeaderCellDef> Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon>setting</mat-icon>
+        </td>
       </ng-container>
 
       <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="createDate">
+        <th mat-header-cell *matHeaderCellDef> Create Date </th>
+        <td mat-cell *matCellDef="let element"> {{element.createDate | date}} </td>
       </ng-container>
 
       <!-- Star Column -->
@@ -80,6 +90,9 @@
     </table>
   </div>
 
-  <mat-paginator [length]="100" [pageSize]="30"></mat-paginator>
+  <mat-paginator [length]="dataSource.resultsLength"
+                 [pageIndex]="0"
+                 [pageSize]="20"
+                 [pageSizeOptions]="[10, 20, 50, 100]"></mat-paginator>
 </div>
 

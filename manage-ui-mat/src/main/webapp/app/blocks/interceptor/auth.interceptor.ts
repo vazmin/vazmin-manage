@@ -5,7 +5,9 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/c
 
 import { SERVER_API_URL } from 'app/app.constants';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private localStorage: LocalStorageService, private sessionStorage: SessionStorageService) {}
 

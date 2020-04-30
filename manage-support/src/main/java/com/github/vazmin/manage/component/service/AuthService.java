@@ -32,7 +32,8 @@ public class AuthService {
      * @return 凭证视图Set
      */
     public Set<MenuVM> getMenuList (PermissionUserDetailsInterface manageUserDetails){
-        Set<MenuVM> menuVMSet = new TreeSet<>(Comparator.comparing(MenuVM::getOrder));
+        Set<MenuVM> menuVMSet = new TreeSet<>(
+                Comparator.comparing(MenuVM::getOrder).thenComparing(MenuVM::getTitle));
         if (manageUserDetails != null) {
             List<MenuInfo> menuInfoList = moduleTree.getRootMenuList();
             for(MenuInfo menuInfo : menuInfoList){
@@ -56,13 +57,21 @@ public class AuthService {
         MenuVM menuVM =
                 new MenuVM(ItemTypeEnum.MENU, menuInfo);
         menuVM.setIcon(menuInfo.getIcon());
+        if (!menuInfo.getSubMenuList().isEmpty()) {
+            for (MenuInfo subMenu: menuInfo.getSubMenuList()) {
+                menuVM.addChildren(parseMenuVMByMenuInfo(subMenu, manageUserDetails));
+            }
+        }
         menuVM.addChildren(
                 parseMenuVMByModuleInfoList(manageUserDetails, menuInfo.getModuleList()));
         return menuVM;
     }
 
-    private Set<MenuVM> parseMenuVMByModuleInfoList(PermissionUserDetailsInterface manageUserDetails, List<ModuleInfo> moduleInfoList) {
-        Set<MenuVM> menuVMSet =  new TreeSet<>(Comparator.comparing(MenuVM::getOrder));
+    private Set<MenuVM> parseMenuVMByModuleInfoList(
+            PermissionUserDetailsInterface manageUserDetails,
+            List<ModuleInfo> moduleInfoList) {
+        Set<MenuVM> menuVMSet =  new TreeSet<>(
+                Comparator.comparing(MenuVM::getOrder).thenComparing(MenuVM::getTitle));
         for (ModuleInfo moduleInfo : moduleInfoList) {
             if(!moduleInfo.isDiscard() && manageUserDetails.hasPermission(moduleInfo)) {
                 MenuVM moduleMenuVM =

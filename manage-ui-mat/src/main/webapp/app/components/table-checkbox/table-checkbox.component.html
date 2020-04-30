@@ -1,0 +1,14 @@
+<th mat-header-cell class="cb-column-header">
+  <mat-checkbox (change)="$event ? masterToggle() : null"
+                [checked]="_selection.hasValue() && isAllSelected()"
+                [indeterminate]="_selection.hasValue() && !isAllSelected()"
+  >
+  </mat-checkbox>
+</th>
+<td mat-cell *matCellDef="let row" class="cb-column">
+  <mat-checkbox (click)="$event.stopPropagation()"
+                (change)="$event ? _selection.toggle(row) : null"
+                [checked]="_selection.isSelected(row)"
+  >
+  </mat-checkbox>
+</td>

@@ -138,7 +138,10 @@ public class MenuVM {
 
     public void addChildren(MenuVM children, boolean order){
         if(this.children == null){
-            this.children = order ? new TreeSet<>(Comparator.comparing(MenuVM::getOrder)) : new HashSet<>();
+            this.children = order ?
+                    new TreeSet<>(
+                            Comparator.comparing(MenuVM::getOrder).thenComparing(MenuVM::getTitle))
+                    : new HashSet<>();
         }
         this.children.add(children);
     }

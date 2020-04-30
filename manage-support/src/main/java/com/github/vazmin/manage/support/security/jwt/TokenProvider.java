@@ -5,6 +5,7 @@ import com.github.vazmin.manage.component.model.users.ManageUser;
 import com.github.vazmin.manage.component.service.users.ManageUserService;
 import com.github.vazmin.manage.component.service.users.UserCacheService;
 import com.github.vazmin.manage.support.security.ManageUserDetails;
+import com.github.vazmin.manage.support.security.ManageUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -46,8 +48,11 @@ public class TokenProvider implements InitializingBean {
     @Autowired
     private ManageUserService manageUserService;
 
-    public TokenProvider(ManageProperties manageProperties) {
+    private UserDetailsService userDetailsService;
+
+    public TokenProvider(ManageProperties manageProperties, UserDetailsService userDetailsService) {
         this.manageProperties = manageProperties;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -98,13 +103,16 @@ public class TokenProvider implements InitializingBean {
             .getBody();
 
 
-        ManageUser manageUser = manageUserService.getByUsernameTakePrincipal(claims.getSubject());
+        ManageUserDetails userDetails =
+                (ManageUserDetails) userDetailsService.loadUserByUsername(claims.getSubject());
+        ManageUser manageUser = userDetails.getManageUser();
         Collection<? extends GrantedAuthority> authorities =
                 manageUser.getPrivilegeKeySet().stream()
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        return new UsernamePasswordAuthenticationToken(new ManageUserDetails(manageUser), token, authorities);
+        return new UsernamePasswordAuthenticationToken(
+                new ManageUserDetails(manageUser), token, authorities);
     }
 
     public boolean validateToken(String authToken) {

@@ -74,7 +74,9 @@ public class ModuleInfoService extends LongPKBaseService<ModuleInfo> {
      */
     public Map<String, ModuleInfo> getModuleMap() {
         Map<String, ModuleInfo> moduleMap = new HashMap<>();
-        List<ModuleInfo> moduleInfoList = getList();
+        Map<String, Object> conditions = new HashMap<>();
+        conditions.put("discard", false);
+        List<ModuleInfo> moduleInfoList = getList(conditions);
         for (ModuleInfo moduleInfo: moduleInfoList) {
             moduleMap.put(moduleInfo.getPkgName(), moduleInfo);
         }

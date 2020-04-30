@@ -40,7 +40,6 @@ export class SimpleComponent implements OnInit {
     constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,
                 public locationService: LocationService,
                 public scrollService: ScrollService,
-                public navigationService: NavigationService,
                 private accountService: AccountService) {
         this.mobileQuery = media.matchMedia('(max-width: '+ this.sideBySideWidth + 'px)');
         this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -68,6 +67,7 @@ export class SimpleComponent implements OnInit {
         });
 
       this.sideNavNodes = this.accountService.getMenuNodes();
+      console.log(this.sideNavNodes)
         // this.navigationService.currentNodes.subscribe(currentNodes => {
         //     this.currentNodes = currentNodes;
         // });

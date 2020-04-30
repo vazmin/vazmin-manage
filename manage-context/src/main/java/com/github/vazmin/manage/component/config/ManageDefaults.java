@@ -81,7 +81,7 @@ public class ManageDefaults {
         interface Redis {
 
             String[] server = {"redis://localhost:6379"};
-            int expiration = 300; // 5 minutes
+            int expiration = 15 * 60; // 15 minutes
             boolean cluster = false;
         }
     }

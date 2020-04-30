@@ -11,7 +11,6 @@ import {CdkAccordionModule} from '@angular/cdk/accordion';
 import {ThemePickerModule} from 'app/components/theme-picker';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import {AppSharedModule} from 'app/shared/shared.module';
@@ -24,8 +23,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatCardModule} from '@angular/material/card';
 import {ViewColumnComponent} from 'app/components/view-column/view-column.component';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import {MatSortModule} from '@angular/material/sort';
+import {CoreModule} from 'app/core/core.module';
+import {TableCheckboxComponent} from 'app/components/table-checkbox/table-checkbox.component';
 
 const LAYOUT_COMPONENT = [
   FooterComponent,
@@ -35,7 +35,8 @@ const LAYOUT_COMPONENT = [
   NavItemComponent,
   SimpleComponent,
   InletComponent,
-  ViewColumnComponent
+  ViewColumnComponent,
+  TableCheckboxComponent,
 ];
 
 @NgModule({
@@ -43,10 +44,9 @@ const LAYOUT_COMPONENT = [
   imports: [
     AppSharedModule,
     PagesRoutingModule,
-    AppSharedModule,
+    CoreModule,
     MatIconModule,
     MatToolbarModule,
-    MatButtonModule,
     MatSidenavModule,
     MatListModule,
     MatTableModule,
@@ -56,8 +56,7 @@ const LAYOUT_COMPONENT = [
     ThemePickerModule,
     MatMenuModule,
     MatCardModule,
-    MatFormFieldModule,
-    MatInputModule
+    MatSortModule
   ]
 })
 export class PagesModule {

@@ -13,9 +13,7 @@ import {Logger} from 'app/shared/logger.service';
  *
  *
  */
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate, CanActivateChild {
 
 

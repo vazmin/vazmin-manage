@@ -34,17 +34,15 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 @ComponentScan("com.github.vazmin.manage.support.security")
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private final TokenProvider tokenProvider;
 
     private final CorsFilter corsFilter;
     private final SecurityProblemSupport problemSupport;
 
     private final ManageProperties manageProperties;
 
-    public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter,
+    public SecurityConfiguration(CorsFilter corsFilter,
                                  SecurityProblemSupport problemSupport,
                                  ManageProperties manageProperties) {
-        this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
         this.problemSupport = problemSupport;
         this.manageProperties = manageProperties;
@@ -155,7 +153,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // @formatter:on
     }
 
+    @Bean
+    public TokenProvider tokenProvider() {
+        return new TokenProvider(manageProperties, userDetailsService());
+    }
+
     private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider);
+        return new JWTConfigurer(tokenProvider());
     }
 }

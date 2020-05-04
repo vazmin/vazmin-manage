@@ -2,35 +2,28 @@ package com.github.vazmin.manage.support.security.jwt;
 
 import com.github.vazmin.manage.component.config.ManageProperties;
 import com.github.vazmin.manage.component.model.users.ManageUser;
-import com.github.vazmin.manage.component.service.users.ManageUserService;
-import com.github.vazmin.manage.component.service.users.UserCacheService;
 import com.github.vazmin.manage.support.security.ManageUserDetails;
-import com.github.vazmin.manage.support.security.ManageUserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Component
 public class TokenProvider implements InitializingBean {
 
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
@@ -44,9 +37,6 @@ public class TokenProvider implements InitializingBean {
     private long tokenValidityInMillisecondsForRememberMe;
 
     private final ManageProperties manageProperties;
-
-    @Autowired
-    private ManageUserService manageUserService;
 
     private UserDetailsService userDetailsService;
 

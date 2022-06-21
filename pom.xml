@@ -32,7 +32,7 @@
         <vazmin.core.version>0.0.2-SNAPSHOT</vazmin.core.version>
         <vazmin.web.version>${vazmin.core.version}</vazmin.web.version>
 
-        <mysql-jdbc.version>8.0.16</mysql-jdbc.version>
+        <mysql-jdbc.version>8.0.28</mysql-jdbc.version>
         <atomikos.version>4.0.6</atomikos.version>
         <protostuff.version>1.5.0</protostuff.version>
         <problem-spring-web.version>0.22.2</problem-spring-web.version>
